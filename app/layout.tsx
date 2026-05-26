@@ -1,15 +1,24 @@
+import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'})
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
+
+export const metadata: Metadata = {
+  title: {
+    default: "TOLIA (Tolentino Life Insurance Agency) \u2014 Pru Life UK",
+    template: "%s | TOLIA \u2014 Pru Life UK",
+  },
+  description: "Empowering Pru Life UK agents to succeed with resources, training, and support.",
+}
 
 export default function RootLayout({
   children,
