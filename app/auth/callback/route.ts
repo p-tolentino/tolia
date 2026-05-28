@@ -35,36 +35,45 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!error) {
-      // Link agent identity
       const {
         data: { user },
       } = await supabase.auth.getUser()
 
       if (user?.email) {
-        const admin = createAdminClient()
+        try {
+          const admin = createAdminClient()
 
-        const { data: agent } = await admin
-          .from("agents")
-          .select("id")
-          .eq("email", user.email)
-          .single()
+          const { data: agent } = await admin
+            .from("agents")
+            .select("id")
+            .eq("email", user.email)
+            .single()
 
-        if (!agent) {
-          await supabase.auth.signOut()
+          if (!agent) {
+            try {
+              await supabase.auth.signOut()
+            } catch {}
+            return NextResponse.redirect(
+              `${origin}/login?error=no_agent_found`
+            )
+          }
+
+          if (!agent.id) {
+            await admin
+              .from("agents")
+              .update({ id: user.id, avatar_url: user.user_metadata.avatar_url })
+              .eq("email", user.email)
+          }
+        } catch {
+          try {
+            await supabase.auth.signOut()
+          } catch {}
           return NextResponse.redirect(
             `${origin}/login?error=no_agent_found`
           )
         }
-
-        if (!agent.id) {
-          await admin
-            .from("agents")
-            .update({ id: user.id, avatar_url: user.user_metadata.avatar_url })
-            .eq("email", user.email)
-        }
       }
 
-      // Recovery / invite flow — redirect to password setup page
       if (type === "recovery" || type === "invite") {
         return NextResponse.redirect(`${origin}/auth/update-password`)
       }

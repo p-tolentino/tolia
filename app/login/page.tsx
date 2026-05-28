@@ -87,9 +87,10 @@ function LoginForm() {
             <Button
               variant="outline"
               className="w-full"
-              onClick={() => {
+              onClick={async () => {
                 setError(null)
-                signInWithGoogle()
+                const result = await signInWithGoogle()
+                if (result.url) window.location.href = result.url
               }}
             >
               <svg className="mr-2 size-4" viewBox="0 0 24 24">

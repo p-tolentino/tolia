@@ -15,7 +15,7 @@ export async function signInWithGoogle() {
     },
   })
 
-  if (data.url) redirect(data.url)
+  return { url: data.url }
 }
 
 export async function signInWithAgentCode(formData: FormData) {
