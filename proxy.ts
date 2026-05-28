@@ -6,18 +6,6 @@ import { createAdminClient } from "./lib/supabase/admin"
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  if (
-    pathname.startsWith("/login") ||
-    pathname.startsWith("/auth/callback") ||
-    pathname.startsWith("/auth/update-password") ||
-    pathname.startsWith("/auth/confirm") ||
-    pathname.startsWith("/_next")
-  ) {
-    return NextResponse.next({ request })
-  }
-
-  let supabaseResponse = NextResponse.next({ request })
-
   try {
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -43,6 +31,23 @@ export async function proxy(request: NextRequest) {
     } = await supabase.auth.getUser()
 
     const admin = createAdminClient()
+
+    if (
+      pathname.startsWith("/login") ||
+      pathname.startsWith("/auth/callback") ||
+      pathname.startsWith("/auth/update-password") ||
+      pathname.startsWith("/auth/confirm")
+    ) {
+      if (user) {
+        const url = request.nextUrl.clone()
+        url.pathname = "/"
+        return NextResponse.redirect(url)
+      }
+
+      return NextResponse.next({ request })
+    }
+
+    let supabaseResponse = NextResponse.next({ request })
 
     const { data: existingAgent } = await admin
       .from("agents")

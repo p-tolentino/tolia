@@ -4,13 +4,13 @@ import { createClient as createServerClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { revalidatePath } from "next/cache"
 
-export async function signInWithGoogle() {
+export async function signInWithGoogle(redirectTo?: string) {
   const supabase = await createServerClient()
 
   const { data } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+      redirectTo: redirectTo ?? `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
     },
   })
 

@@ -110,7 +110,9 @@ function LoginForm() {
               className="w-full"
               onClick={async () => {
                 setError(null)
-                const result = await signInWithGoogle()
+                const result = await signInWithGoogle(
+                  `${window.location.origin}/auth/callback`
+                )
                 if (result.url) window.location.href = result.url
               }}
             >
@@ -219,7 +221,7 @@ function LoginForm() {
         </p>
 
         <p className="text-center text-xs text-muted-foreground">
-          Having trouble? Contact the branch manager for assistance.
+          Still having trouble? Contact the branch manager for assistance.
         </p>
       </div>
     </div>
