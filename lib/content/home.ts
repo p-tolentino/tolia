@@ -49,8 +49,8 @@ export const homeContent: PageContent = {
 }
 
 export const heroContent = {
-  headline: "Headline/Tagline",
-  subheadline: "Subheading",
+  headline: "Welcome to TOLIA Web Suite",
+  subheadline: "Empowering agents to succeed.",
   cta: { label: "Explore Resources", href: "/agent-support" },
   ctaSecondary: { label: "View Calendar", href: "/pru-calendar" },
 }

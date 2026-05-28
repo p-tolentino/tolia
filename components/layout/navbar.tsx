@@ -57,10 +57,10 @@ export function Navbar({ className }: { className?: string }) {
                 >
                   <ul
                     className={cn(
-                      "grid gap-1 p-4 max-w-[90vw]",
+                      "grid max-w-[90vw] gap-1 p-4",
                       item.children.length <= 4
-                        ? "w-[400px] grid-cols-1"
-                        : "w-[600px] grid-cols-2"
+                        ? "w-100 grid-cols-1"
+                        : "w-150 grid-cols-2"
                     )}
                   >
                     {item.children.map((child) => {

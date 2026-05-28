@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
 import { SectionWrapper } from "@/components/shared/section-wrapper"
-import { prospectList } from "@/lib/content/rookie-support"
+import { prospectList } from "@/lib/content/new-recruits"
 
 export const metadata: Metadata = {
   title: "Prospect List",
@@ -12,7 +12,10 @@ export const metadata: Metadata = {
 export default function ProspectListPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={prospectList.title} description={prospectList.description} />
+      <PageHeader
+        title={prospectList.title}
+        description={prospectList.description}
+      />
       <div className="mt-8">
         <ContentSection sections={prospectList.sections} />
       </div>

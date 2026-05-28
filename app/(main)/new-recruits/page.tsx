@@ -1,5 +1,15 @@
 import type { Metadata } from "next"
-import { GitBranch, CalendarCheck, FileText, BookOpen, GraduationCap, Award, ListChecks, LogIn, Users, Calendar } from "lucide-react"
+import {
+  GitBranch,
+  CalendarCheck,
+  FileText,
+  BookOpen,
+  Award,
+  ListChecks,
+  LogIn,
+  Users,
+  Calendar,
+} from "lucide-react"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
 import { SectionWrapper } from "@/components/shared/section-wrapper"
@@ -14,8 +24,8 @@ const itemIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   "Rookie High Flyers Club": Award,
   "Golden List": ListChecks,
   Onboarding: LogIn,
-  "Prospect List": Users,
   "Your First 90 Days": Calendar,
+  "Prospect List": Users,
 }
 
 export const metadata: Metadata = {
@@ -26,9 +36,15 @@ export const metadata: Metadata = {
 export default function NewRecruitsPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={newRecruitsLanding.title} description={newRecruitsLanding.description} />
+      <PageHeader
+        title={newRecruitsLanding.title}
+        description={newRecruitsLanding.description}
+      />
       <div className="mt-8">
-        <ContentSection sections={newRecruitsLanding.sections} itemIcons={itemIcons} />
+        <ContentSection
+          sections={newRecruitsLanding.sections}
+          itemIcons={itemIcons}
+        />
       </div>
     </SectionWrapper>
   )

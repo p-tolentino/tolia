@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
 import { SectionWrapper } from "@/components/shared/section-wrapper"
-import { onboarding } from "@/lib/content/rookie-support"
+import { onboarding } from "@/lib/content/new-recruits"
 
 export const metadata: Metadata = {
   title: "Onboarding",
@@ -12,7 +12,10 @@ export const metadata: Metadata = {
 export default function OnboardingPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={onboarding.title} description={onboarding.description} />
+      <PageHeader
+        title={onboarding.title}
+        description={onboarding.description}
+      />
       <div className="mt-8">
         <ContentSection sections={onboarding.sections} />
       </div>
