@@ -3,14 +3,29 @@
 import { useState, useMemo } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { getCalendarMonth, addMonths, subMonths } from "@/lib/calendar-utils"
+import type { CalendarDayData } from "@/lib/calendar-utils"
 import { CalendarDay } from "./calendar-day"
 import { EventDetail } from "./event-detail"
 import { EventModal } from "./event-modal"
 import type { CalendarEvent } from "@/lib/types"
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+]
 
 interface CalendarGridProps {
   events: CalendarEvent[]
@@ -23,18 +38,31 @@ export function CalendarGrid({ events }: CalendarGridProps) {
   const [modalEvent, setModalEvent] = useState<CalendarEvent | null>(null)
 
   const monthData = useMemo(
-    () => getCalendarMonth(currentDate.getFullYear(), currentDate.getMonth(), events),
-    [currentDate, events],
+    () =>
+      getCalendarMonth(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        events
+      ),
+    [currentDate, events]
   )
 
   const selectedDayEvents = useMemo(
-    () => events.filter((e) => {
-      const ed = new Date(e.date)
-      return ed.getFullYear() === selectedDate.getFullYear()
-        && ed.getMonth() === selectedDate.getMonth()
-        && ed.getDate() === selectedDate.getDate()
-    }),
-    [selectedDate, events],
+    () =>
+      events.filter((e) => {
+        const start = new Date(e.date)
+        const day = selectedDate
+        if (
+          start.getFullYear() === day.getFullYear() &&
+          start.getMonth() === day.getMonth() &&
+          start.getDate() === day.getDate()
+        )
+          return true
+        if (!e.endDate) return false
+        const end = new Date(e.endDate)
+        return day >= start && day <= end
+      }),
+    [selectedDate, events]
   )
 
   function goToToday() {
@@ -66,39 +94,63 @@ export function CalendarGrid({ events }: CalendarGridProps) {
     return { minYear: min, yearRange: range }
   }, [events])
 
-  const isAtBoundary = currentDate.getFullYear() === minYear && currentDate.getMonth() === 0
+  const isAtBoundary =
+    currentDate.getFullYear() === minYear && currentDate.getMonth() === 0
+
+  const weeks = useMemo(() => {
+    const result: CalendarDayData[][] = []
+    for (let i = 0; i < monthData.days.length; i += 7) {
+      result.push(monthData.days.slice(i, i + 7))
+    }
+    return result
+  }, [monthData.days])
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon" onClick={goPrev} disabled={isAtBoundary} aria-label="Previous month">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={goPrev}
+            disabled={isAtBoundary}
+            aria-label="Previous month"
+          >
             <ChevronLeft className="size-4" />
           </Button>
 
           <select
             value={currentDate.getMonth()}
             onChange={(e) => handleMonthChange(parseInt(e.target.value))}
-            className="h-9 rounded-md border bg-background px-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ring"
+            className="h-9 rounded-md border bg-background px-2 text-sm font-medium focus:ring-2 focus:ring-ring focus:outline-none"
             aria-label="Select month"
           >
             {MONTHS.map((name, i) => (
-              <option key={name} value={i}>{name}</option>
+              <option key={name} value={i}>
+                {name}
+              </option>
             ))}
           </select>
 
           <select
             value={currentDate.getFullYear()}
             onChange={(e) => handleYearChange(parseInt(e.target.value))}
-            className="h-9 rounded-md border bg-background px-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ring"
+            className="h-9 rounded-md border bg-background px-2 text-sm font-medium focus:ring-2 focus:ring-ring focus:outline-none"
             aria-label="Select year"
           >
             {yearRange.map((y) => (
-              <option key={y} value={y}>{y}</option>
+              <option key={y} value={y}>
+                {y}
+              </option>
             ))}
           </select>
 
-          <Button variant="outline" size="icon" onClick={goNext} aria-label="Next month">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={goNext}
+            aria-label="Next month"
+          >
             <ChevronRight className="size-4" />
           </Button>
         </div>
@@ -107,7 +159,7 @@ export function CalendarGrid({ events }: CalendarGridProps) {
         </Button>
       </div>
 
-      <div className="rounded-lg border bg-card">
+      <div className="overflow-hidden rounded-lg border bg-card">
         <div className="grid grid-cols-7 border-b">
           {WEEKDAYS.map((day) => (
             <div
@@ -119,29 +171,48 @@ export function CalendarGrid({ events }: CalendarGridProps) {
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-7 gap-px bg-border">
-          {monthData.days.map((day) => (
-            <div key={day.date.toISOString()} className="bg-card p-px sm:p-0.5">
-              <CalendarDay
-                day={day}
-                isSelected={
+        {weeks.map((week, wi) => (
+          <div key={wi} className={cn(wi > 0 && "border-t border-border")}>
+            <div className="grid grid-cols-7 gap-px bg-border">
+              {week.map((day) => {
+                const isDaySelected =
                   selectedDate.getFullYear() === day.date.getFullYear() &&
                   selectedDate.getMonth() === day.date.getMonth() &&
                   selectedDate.getDate() === day.date.getDate()
-                }
-                onSelect={setSelectedDate}
-                onEventClick={setModalEvent}
-              />
+                return (
+                  <div
+                    key={day.date.toISOString()}
+                    className={cn(
+                      "h-24 rounded-lg bg-card p-px transition-all sm:h-32 sm:p-0.5 cursor-pointer hover:bg-accent",
+                      day.isToday &&
+                        !isDaySelected &&
+                        "relative z-10 ring-2 ring-primary",
+                      isDaySelected &&
+                        "relative z-10 bg-accent ring-1 ring-primary"
+                    )}
+                    onClick={() => setSelectedDate(day.date)}
+                  >
+                    <CalendarDay
+                      day={day}
+                      isSelected={isDaySelected}
+                      onSelect={setSelectedDate}
+                      onEventClick={setModalEvent}
+                    />
+                  </div>
+                )
+              })}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
       <EventDetail date={selectedDate} events={selectedDayEvents} />
       <EventModal
         event={modalEvent}
         open={modalEvent !== null}
-        onOpenChange={(open) => { if (!open) setModalEvent(null) }}
+        onOpenChange={(open) => {
+          if (!open) setModalEvent(null)
+        }}
       />
     </div>
   )

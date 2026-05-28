@@ -3,21 +3,21 @@ import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
 import { SectionWrapper } from "@/components/shared/section-wrapper"
-import { recognitionContent } from "@/lib/content/recognition"
+import { clientForumContent } from "@/lib/content/client-forum"
 
 export const metadata: Metadata = {
-  title: "Recognition",
-  description: "Posters and announcements celebrating agent achievements.",
+  title: "Client Forum",
+  description: "A space for client discussions, feedback, and engagement.",
 }
 
-export default function RecognitionPage() {
+export default function ClientForumPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={recognitionContent.title} description={recognitionContent.description} 
-        breadcrumbs={getBreadcrumbs("/recognition")}
+      <PageHeader title={clientForumContent.title} description={clientForumContent.description} 
+        breadcrumbs={getBreadcrumbs("/schedules/client-forum")}
       />
       <div className="mt-8">
-        <ContentSection sections={recognitionContent.sections} />
+        <ContentSection sections={clientForumContent.sections} />
       </div>
     </SectionWrapper>
   )

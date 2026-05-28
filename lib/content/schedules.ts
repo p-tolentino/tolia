@@ -7,8 +7,8 @@ export const schedulesLanding: PageContent = {
     {
       heading: "Schedule Resources",
       items: [
-        { label: "Client Forum", href: "/client-forum", description: "Client discussions, feedback, and engagement" },
-        { label: "PRU Calendar", href: "/pru-calendar", description: "Stay up to date with events and deadlines" },
+        { label: "Client Forum", href: "/schedules/client-forum", description: "Client discussions, feedback, and engagement" },
+        { label: "PRU Calendar", href: "/schedules/pru-calendar", description: "Stay up to date with events and deadlines" },
       ],
     },
   ],

@@ -14,7 +14,7 @@ export default function PruCalendarPage() {
   return (
     <SectionWrapper>
       <PageHeader title={pruCalendarContent.title} description={pruCalendarContent.description} 
-        breadcrumbs={getBreadcrumbs("/pru-calendar")}
+        breadcrumbs={getBreadcrumbs("/schedules/pru-calendar")}
       />
       <div className="mt-8">
         <div className="mb-6 flex flex-wrap gap-3">

@@ -20,7 +20,7 @@ export default function TrackersPage() {
   return (
     <SectionWrapper>
       <PageHeader title={trackersLanding.title} description={trackersLanding.description} 
-        breadcrumbs={getBreadcrumbs("/trackers")}
+        breadcrumbs={getBreadcrumbs("/rewards-and-incentives/trackers")}
       />
       <div className="mt-8">
         <ContentSection sections={trackersLanding.sections} itemIcons={itemIcons} />

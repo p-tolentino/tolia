@@ -62,5 +62,5 @@ export const heroContent = {
   headline: "Welcome to TOLIA Web Suite",
   subheadline: "Empowering agents to succeed.",
   cta: { label: "Explore Resources", href: "/agent-support" },
-  ctaSecondary: { label: "View Calendar", href: "/pru-calendar" },
+  ctaSecondary: { label: "View Calendar", href: "/schedules/pru-calendar" },
 }

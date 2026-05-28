@@ -3,21 +3,21 @@ import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
 import { SectionWrapper } from "@/components/shared/section-wrapper"
-import { incentivesContent } from "@/lib/content/incentives"
+import { achieversClub } from "@/lib/content/trackers"
 
 export const metadata: Metadata = {
-  title: "Incentives",
-  description: "Current incentive programs, rewards, and recognition.",
+  title: "Achievers Club",
+  description: "Track your Achievers Club qualifications and progress.",
 }
 
-export default function IncentivesPage() {
+export default function AchieversClubPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={incentivesContent.title} description={incentivesContent.description} 
-        breadcrumbs={getBreadcrumbs("/incentives")}
+      <PageHeader title={achieversClub.title} description={achieversClub.description} 
+        breadcrumbs={getBreadcrumbs("/rewards-and-incentives/trackers/achievers-club")}
       />
       <div className="mt-8">
-        <ContentSection sections={incentivesContent.sections} />
+        <ContentSection sections={achieversClub.sections} />
       </div>
     </SectionWrapper>
   )

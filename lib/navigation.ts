@@ -135,17 +135,17 @@ export const navigationItems: NavItem[] = [
     children: [
       {
         title: "Recognition",
-        href: "/recognition",
+        href: "/rewards-and-incentives/recognition",
         description: "Posters and announcements celebrating achievements",
       },
       {
         title: "Trackers",
-        href: "/trackers",
+        href: "/rewards-and-incentives/trackers",
         description: "Performance trackers and goal monitoring",
       },
       {
         title: "Incentives",
-        href: "/incentives",
+        href: "/rewards-and-incentives/incentives",
         description: "Current incentive programs and rewards",
       },
     ],
@@ -229,12 +229,12 @@ export const navigationItems: NavItem[] = [
     children: [
       {
         title: "Client Forum",
-        href: "/client-forum",
+        href: "/schedules/client-forum",
         description: "Client discussions, feedback, and engagement",
       },
       {
         title: "PRU Calendar",
-        href: "/pru-calendar",
+        href: "/schedules/pru-calendar",
         description: "Stay up to date with events and deadlines",
       },
     ],
@@ -266,6 +266,11 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
   const crumbs: BreadcrumbItem[] = [{ label: "Home", href: "/" }]
 
   for (const item of navigationItems) {
+    if (item.href && item.href === pathname && item.href !== "/") {
+      crumbs.push({ label: item.title, href: item.href })
+      return crumbs
+    }
+
     if (!item.children) continue
 
     const matchedChild = item.children.find((c) => c.href === pathname)
@@ -274,11 +279,6 @@ export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
         crumbs.push({ label: item.title, href: item.href })
       }
       crumbs.push({ label: matchedChild.title, href: matchedChild.href })
-      return crumbs
-    }
-
-    if (item.href && item.href === pathname && item.href !== "/") {
-      crumbs.push({ label: item.title, href: item.href })
       return crumbs
     }
   }

@@ -7,9 +7,9 @@ export const rewardsAndIncentivesLanding: PageContent = {
     {
       heading: "Incentive Resources",
       items: [
-        { label: "Recognition", href: "/recognition", description: "Posters and announcements celebrating achievements" },
-        { label: "Trackers", href: "/trackers", description: "Performance trackers and goal monitoring" },
-        { label: "Incentives", href: "/incentives", description: "Current incentive programs and rewards" },
+        { label: "Recognition", href: "/rewards-and-incentives/recognition", description: "Posters and announcements celebrating achievements" },
+        { label: "Trackers", href: "/rewards-and-incentives/trackers", description: "Performance trackers and goal monitoring" },
+        { label: "Incentives", href: "/rewards-and-incentives/incentives", description: "Current incentive programs and rewards" },
       ],
     },
   ],

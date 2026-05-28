@@ -2,18 +2,736 @@ import type { CalendarEvent, PageContent } from "../types"
 
 export const pruCalendarContent: PageContent = {
   title: "PRU Calendar",
-  description: "Stay up to date with TOLIA events, training sessions, and important deadlines.",
+  description:
+    "Stay up to date with TOLIA events, training sessions, and important deadlines.",
   sections: [
-    { heading: "Upcoming Events", body: "Browse upcoming events, training sessions, and important dates." },
+    {
+      heading: "Upcoming Events",
+      body: "Browse upcoming events, training sessions, and important dates.",
+    },
   ],
 }
 
 export const calendarEvents: CalendarEvent[] = [
-  { id: "1", title: "Green Hour Weekly Training", date: "2026-05-18", time: "10:00 AM - 11:00 AM", eventType: "training", isRecurring: true, recurringPattern: "Every Monday" },
-  { id: "2", title: "Branch Managers Meeting", date: "2026-05-20", time: "2:00 PM - 4:00 PM", eventType: "meeting" },
-  { id: "3", title: "BYB Session", date: "2026-05-22", time: "9:00 AM - 12:00 PM", location: "TOLIA Branch Office", eventType: "exam" },
-  { id: "4", title: "Licensing Exam", date: "2026-05-25", time: "8:00 AM - 12:00 PM", location: "Testing Center", eventType: "exam" },
-  { id: "5", title: "Company Incentive Deadline", date: "2026-05-30", time: "5:00 PM", eventType: "deadline" },
-  { id: "6", title: "Product Training - PruLink Prime", date: "2026-06-01", time: "10:00 AM - 12:00 PM", eventType: "training" },
-  { id: "7", title: "Team Building Activity", date: "2026-06-05", time: "8:00 AM - 5:00 PM", location: "Venue TBA", eventType: "social" },
+  // ── MAY 2026 ─────────────────────────────────────────
+
+  // Sat May 2 — Branch Assembly (first Saturday recurring)
+  {
+    id: "ba-may",
+    title: "Branch Assembly",
+    date: "2026-05-02",
+    startTime: "09:00",
+    endTime: "12:00",
+    time: "9:00 AM - 12:00 PM",
+    location: "TOLIA Main Office",
+    eventType: "meeting",
+    isRecurring: true,
+    recurringPattern: "First Saturday of every month",
+    rrule: "FREQ=MONTHLY;BYDAY=1SA",
+    organizer: "Branch Manager",
+  },
+
+  // Mon May 4
+  {
+    id: "gh-04",
+    title: "Green Hour Weekly Training",
+    date: "2026-05-04",
+    startTime: "10:00",
+    endTime: "11:00",
+    time: "10:00 AM - 11:00 AM",
+    eventType: "training",
+    isRecurring: true,
+    recurringPattern: "Every Monday",
+    rrule: "FREQ=WEEKLY;BYDAY=MO",
+  },
+
+  // Mon May 11
+  {
+    id: "gh-11",
+    title: "Green Hour Weekly Training",
+    date: "2026-05-11",
+    startTime: "10:00",
+    endTime: "11:00",
+    time: "10:00 AM - 11:00 AM",
+    eventType: "training",
+    isRecurring: true,
+    recurringPattern: "Every Monday",
+    rrule: "FREQ=WEEKLY;BYDAY=MO",
+  },
+
+  // Mon May 18 — 3 events
+  {
+    id: "gh-18",
+    title: "Green Hour Weekly Training",
+    date: "2026-05-18",
+    startTime: "10:00",
+    endTime: "11:00",
+    time: "10:00 AM - 11:00 AM",
+    eventType: "training",
+    isRecurring: true,
+    recurringPattern: "Every Monday",
+    rrule: "FREQ=WEEKLY;BYDAY=MO",
+  },
+  {
+    id: "orient-18",
+    title: "New Agent Orientation",
+    date: "2026-05-18",
+    startTime: "14:00",
+    endTime: "16:00",
+    time: "2:00 PM - 4:00 PM",
+    location: "TOLIA Training Room",
+    eventType: "training",
+    description:
+      "Mandatory orientation for all new agents. Bring government IDs and contract documents.",
+    organizer: "HR Department",
+  },
+  {
+    id: "policy-18",
+    title: "Policy Submission Reminder",
+    date: "2026-05-18",
+    eventType: "deadline",
+    allDay: true,
+    description:
+      "All pending policy submissions must be encoded by end of day.",
+  },
+
+  // Tue May 19 — 2 events
+  {
+    id: "coach-19",
+    title: "One-on-One Coaching Session",
+    date: "2026-05-19",
+    startTime: "09:00",
+    endTime: "10:00",
+    time: "9:00 AM - 10:00 AM",
+    location: "Unit Manager's Office",
+    eventType: "meeting",
+    organizer: "Unit Manager",
+  },
+  {
+    id: "sm-deadline-19",
+    title: "Social Media Content Deadline",
+    date: "2026-05-19",
+    startTime: "17:00",
+    time: "5:00 PM",
+    eventType: "deadline",
+    description: "Submit May content cards for approval.",
+  },
+
+  // Wed May 20 — 3 events
+  {
+    id: "bmm-20",
+    title: "Branch Managers Meeting",
+    date: "2026-05-20",
+    startTime: "14:00",
+    endTime: "16:00",
+    time: "2:00 PM - 4:00 PM",
+    eventType: "meeting",
+    location: "Conference Room A",
+    description: "Monthly branch performance review and target setting.",
+    organizer: "Branch Manager",
+  },
+  {
+    id: "compliance-20",
+    title: "Compliance Refresher",
+    date: "2026-05-20",
+    startTime: "09:00",
+    endTime: "10:30",
+    time: "9:00 AM - 10:30 AM",
+    location: "Conference Room B",
+    eventType: "training",
+    description: "Annual compliance and code of ethics refresher course.",
+  },
+  {
+    id: "bday-20",
+    title: "May Birthday Celebration",
+    date: "2026-05-20",
+    startTime: "16:00",
+    endTime: "17:00",
+    time: "4:00 PM - 5:00 PM",
+    location: "Lounge Area",
+    eventType: "social",
+    description: "Celebrating May-born team members!",
+    organizer: "Social Committee",
+  },
+
+  // Thu May 21
+  {
+    id: "leadership-21",
+    title: "Leadership Workshop",
+    date: "2026-05-21",
+    startTime: "13:00",
+    endTime: "15:00",
+    time: "1:00 PM - 3:00 PM",
+    location: "Training Center",
+    eventType: "training",
+    description: "Situational leadership and team motivation techniques.",
+    attachments: [
+      { name: "Workshop Slides", url: "#", type: "pdf" },
+      { name: "Handout", url: "#", type: "pdf" },
+    ],
+  },
+
+  // Fri May 22 — 2 events
+  {
+    id: "byb-22",
+    title: "BYB Session",
+    date: "2026-05-22",
+    startTime: "09:00",
+    endTime: "12:00",
+    time: "9:00 AM - 12:00 PM",
+    location: "TOLIA Branch Office",
+    eventType: "exam",
+    description: "Build Your Business (BYB) training and assessment session.",
+  },
+  {
+    id: "lunch-22",
+    title: "Team Lunch",
+    date: "2026-05-22",
+    startTime: "12:00",
+    endTime: "13:30",
+    time: "12:00 PM - 1:30 PM",
+    location: "Café TOLIA",
+    eventType: "social",
+  },
+
+  // Mon May 25 — 3 events
+  {
+    id: "licensing-25",
+    title: "Licensing Exam",
+    date: "2026-05-25",
+    startTime: "08:00",
+    endTime: "12:00",
+    time: "8:00 AM - 12:00 PM",
+    location: "Testing Center",
+    eventType: "exam",
+    description:
+      "Pre-licensing examination for new agents. Bring valid ID and notice of admission.",
+  },
+  {
+    id: "gh-25",
+    title: "Green Hour Weekly Training",
+    date: "2026-05-25",
+    startTime: "10:00",
+    endTime: "11:00",
+    time: "10:00 AM - 11:00 AM",
+    eventType: "training",
+    isRecurring: true,
+    recurringPattern: "Every Monday",
+    rrule: "FREQ=WEEKLY;BYDAY=MO",
+  },
+  {
+    id: "review-25",
+    title: "Unit Performance Review",
+    date: "2026-05-25",
+    startTime: "15:00",
+    endTime: "16:30",
+    time: "3:00 PM - 4:30 PM",
+    location: "Unit Manager's Office",
+    eventType: "meeting",
+    organizer: "Unit Manager",
+  },
+
+  // Wed May 27
+  {
+    id: "claims-27",
+    title: "Claims Processing Seminar",
+    date: "2026-05-27",
+    startTime: "09:00",
+    endTime: "11:00",
+    time: "9:00 AM - 11:00 AM",
+    location: "Seminar Hall",
+    eventType: "training",
+    description: "Updates on claims processing workflow and documentation.",
+  },
+
+  // Thu May 28 — 2 events
+  {
+    id: "recruit-28",
+    title: "Recruitment Strategy Huddle",
+    date: "2026-05-28",
+    startTime: "10:00",
+    endTime: "11:30",
+    time: "10:00 AM - 11:30 AM",
+    eventType: "meeting",
+  },
+  {
+    id: "mdrt-28",
+    title: "MDRT Qualification Check-In",
+    date: "2026-05-28",
+    startTime: "14:00",
+    endTime: "15:00",
+    time: "2:00 PM - 3:00 PM",
+    eventType: "meeting",
+    description: "Track MDRT qualification progress and address gaps.",
+  },
+
+  // Fri May 29 (Today) — 2 events
+  {
+    id: "huddle-29",
+    title: "Weekend Kickoff Huddle",
+    date: "2026-05-29",
+    startTime: "09:00",
+    endTime: "10:00",
+    time: "9:00 AM - 10:00 AM",
+    location: "Main Office",
+    eventType: "meeting",
+    description: "End-of-week motivation and target check.",
+    organizer: "Branch Manager",
+  },
+  {
+    id: "pruonline-29",
+    title: "PRU Life UK Online Module Due",
+    date: "2026-05-29",
+    eventType: "deadline",
+    allDay: true,
+    description: "Complete PRU Life UK Module 3: Needs Analysis.",
+  },
+
+  // Sat May 30 — 2 events
+  {
+    id: "incentive-30",
+    title: "Company Incentive Deadline",
+    date: "2026-05-30",
+    startTime: "17:00",
+    time: "5:00 PM",
+    eventType: "deadline",
+    description: "Final day to qualify for the Q2 production incentive.",
+  },
+  {
+    id: "outreach-30",
+    title: "Weekend Outreach Program",
+    date: "2026-05-30",
+    startTime: "08:00",
+    endTime: "12:00",
+    time: "8:00 AM - 12:00 PM",
+    location: "Community Center",
+    eventType: "social",
+    description:
+      "Community outreach and financial literacy seminar for barangay residents.",
+    organizer: "Social Committee",
+  },
+
+  // ── JUNE 2026 ─────────────────────────────────────────
+
+  // Sat June 6 — Branch Assembly (first Saturday recurring)
+  {
+    id: "ba-jun",
+    title: "Branch Assembly",
+    date: "2026-06-06",
+    startTime: "09:00",
+    endTime: "12:00",
+    time: "9:00 AM - 12:00 PM",
+    location: "TOLIA Main Office",
+    eventType: "meeting",
+    isRecurring: true,
+    recurringPattern: "First Saturday of every month",
+    rrule: "FREQ=MONTHLY;BYDAY=1SA",
+    organizer: "Branch Manager",
+  },
+
+  // Mon June 1 — 2 events
+  {
+    id: "pruprime-01",
+    title: "Product Training - PruLink Prime",
+    date: "2026-06-01",
+    startTime: "10:00",
+    endTime: "12:00",
+    time: "10:00 AM - 12:00 PM",
+    eventType: "training",
+    description:
+      "In-depth product training on the new PruLink Prime investment-linked plan.",
+    attachments: [
+      { name: "PruLink Prime Brochure", url: "#", type: "pdf" },
+      { name: "Product Illustrations", url: "#", type: "doc" },
+    ],
+  },
+  {
+    id: "gh-01",
+    title: "Green Hour Weekly Training",
+    date: "2026-06-01",
+    startTime: "10:00",
+    endTime: "11:00",
+    time: "10:00 AM - 11:00 AM",
+    eventType: "training",
+    isRecurring: true,
+    recurringPattern: "Every Monday",
+    rrule: "FREQ=WEEKLY;BYDAY=MO",
+  },
+
+  // Wed June 3 — 2 events
+  {
+    id: "bmm-03",
+    title: "Branch Managers Meeting",
+    date: "2026-06-03",
+    startTime: "14:00",
+    endTime: "16:00",
+    time: "2:00 PM - 4:00 PM",
+    eventType: "meeting",
+    organizer: "Branch Manager",
+  },
+  {
+    id: "ethics-03",
+    title: "Insurance Code of Ethics",
+    date: "2026-06-03",
+    startTime: "09:00",
+    endTime: "11:00",
+    time: "9:00 AM - 11:00 AM",
+    location: "Training Room A",
+    eventType: "training",
+  },
+
+  // Mon-Fri June 1-5 — MULTI-DAY: Recruitment Week
+  {
+    id: "recruit-week",
+    title: "Recruitment Week Campaign",
+    date: "2026-06-01",
+    endDate: "2026-06-05",
+    eventType: "social",
+    allDay: true,
+    description:
+      "Branch-wide recruitment drive. All agents encouraged to invite prospects. Prizes for top referrer.",
+    organizer: "Branch Manager",
+  },
+
+  // Fri June 5 — 2 events (overlaps with Recruitment Week)
+  {
+    id: "teambuild-05",
+    title: "Team Building Activity",
+    date: "2026-06-05",
+    startTime: "08:00",
+    endTime: "17:00",
+    time: "8:00 AM - 5:00 PM",
+    location: "Venue TBA",
+    eventType: "social",
+    description: "Annual team building and bonding activity.",
+  },
+  {
+    id: "byb-05",
+    title: "BYB Session",
+    date: "2026-06-05",
+    startTime: "09:00",
+    endTime: "12:00",
+    time: "9:00 AM - 12:00 PM",
+    location: "TOLIA Branch Office",
+    eventType: "exam",
+  },
+
+  // Mon June 8 — 3 events
+  {
+    id: "gh-08",
+    title: "Green Hour Weekly Training",
+    date: "2026-06-08",
+    startTime: "10:00",
+    endTime: "11:00",
+    time: "10:00 AM - 11:00 AM",
+    eventType: "training",
+    isRecurring: true,
+    recurringPattern: "Every Monday",
+    rrule: "FREQ=WEEKLY;BYDAY=MO",
+  },
+  {
+    id: "leaders-08",
+    title: "Unit Leaders Meeting",
+    date: "2026-06-08",
+    startTime: "13:00",
+    endTime: "14:30",
+    time: "1:00 PM - 2:30 PM",
+    eventType: "meeting",
+    organizer: "Unit Manager",
+  },
+  {
+    id: "qreport-08",
+    title: "Quarterly Report Deadline",
+    date: "2026-06-08",
+    startTime: "17:00",
+    time: "5:00 PM",
+    eventType: "deadline",
+    description: "Submit Q2 performance reports to the branch office.",
+  },
+
+  // Mon-Wed June 8-10 — MULTI-DAY: Mid-Year Planning
+  {
+    id: "midyear-plan",
+    title: "Mid-Year Planning Workshop",
+    date: "2026-06-08",
+    endDate: "2026-06-10",
+    startTime: "09:00",
+    endTime: "17:00",
+    time: "9:00 AM - 5:00 PM",
+    location: "Conference Center",
+    eventType: "meeting",
+    description:
+      "Three-day strategic planning workshop for all unit managers and branch leaders. Hotel accommodation provided.",
+    organizer: "Branch Manager",
+    attachments: [
+      { name: "Planning Agenda", url: "#", type: "pdf" },
+      { name: "Hotel Info", url: "#", type: "link" },
+    ],
+  },
+
+  // Thu June 11
+  {
+    id: "prospect-11",
+    title: "Prospecting Workshop",
+    date: "2026-06-11",
+    startTime: "09:00",
+    endTime: "11:00",
+    time: "9:00 AM - 11:00 AM",
+    location: "Training Center",
+    eventType: "training",
+    description:
+      "Effective prospecting techniques and lead generation strategies.",
+  },
+
+  // Fri June 12 — 2 events
+  {
+    id: "bootcamp-12",
+    title: "Recruiting Bootcamp",
+    date: "2026-06-12",
+    startTime: "09:00",
+    endTime: "12:00",
+    time: "9:00 AM - 12:00 PM",
+    location: "Seminar Hall",
+    eventType: "training",
+    description:
+      "Intensive recruiting skills bootcamp. Role-playing and objection handling.",
+    attachments: [{ name: "Bootcamp Workbook", url: "#", type: "pdf" }],
+  },
+  {
+    id: "social-plan-12",
+    title: "Social Committee Planning",
+    date: "2026-06-12",
+    startTime: "14:00",
+    endTime: "15:00",
+    time: "2:00 PM - 3:00 PM",
+    eventType: "meeting",
+  },
+
+  // Mon June 15 — 2 events
+  {
+    id: "gh-15",
+    title: "Green Hour Weekly Training",
+    date: "2026-06-15",
+    startTime: "10:00",
+    endTime: "11:00",
+    time: "10:00 AM - 11:00 AM",
+    eventType: "training",
+    isRecurring: true,
+    recurringPattern: "Every Monday",
+    rrule: "FREQ=WEEKLY;BYDAY=MO",
+  },
+  {
+    id: "mdrt-deadline-15",
+    title: "MDRT Application Deadline",
+    date: "2026-06-15",
+    eventType: "deadline",
+    allDay: true,
+    description: "Final submission of MDRT qualification documents.",
+  },
+
+  // Wed June 17
+  {
+    id: "underwriting-17",
+    title: "Underwriting Updates",
+    date: "2026-06-17",
+    startTime: "10:00",
+    endTime: "11:30",
+    time: "10:00 AM - 11:30 AM",
+    location: "Conference Room",
+    eventType: "training",
+    description: "Latest underwriting guidelines and frequently asked cases.",
+    attachments: [{ name: "Underwriting Guide v3", url: "#", type: "pdf" }],
+  },
+
+  // Fri June 19 — 3 events
+  {
+    id: "salepush-19",
+    title: "Month-End Sales Push",
+    date: "2026-06-19",
+    startTime: "08:00",
+    endTime: "17:00",
+    time: "8:00 AM - 5:00 PM",
+    location: "All Branches",
+    eventType: "social",
+    description:
+      "Final sales push day. Extended office hours, free dinner for top performers.",
+  },
+  {
+    id: "license2-19",
+    title: "Licensing Exam (Batch 2)",
+    date: "2026-06-19",
+    startTime: "13:00",
+    endTime: "16:00",
+    time: "1:00 PM - 4:00 PM",
+    location: "Testing Center",
+    eventType: "exam",
+  },
+  {
+    id: "awards-19",
+    title: "Agent Recognition Awards",
+    date: "2026-06-19",
+    startTime: "17:30",
+    endTime: "19:00",
+    time: "5:30 PM - 7:00 PM",
+    location: "Grand Ballroom",
+    eventType: "social",
+    description: "Quarterly awards ceremony recognizing top-performing agents.",
+    organizer: "Branch Manager",
+  },
+
+  // Mon June 22 — 2 events
+  {
+    id: "gh-22",
+    title: "Green Hour Weekly Training",
+    date: "2026-06-22",
+    startTime: "10:00",
+    endTime: "11:00",
+    time: "10:00 AM - 11:00 AM",
+    eventType: "training",
+    isRecurring: true,
+    recurringPattern: "Every Monday",
+    rrule: "FREQ=WEEKLY;BYDAY=MO",
+  },
+  {
+    id: "conversion-22",
+    title: "Policy Conversion Workshop",
+    date: "2026-06-22",
+    startTime: "14:00",
+    endTime: "16:00",
+    time: "2:00 PM - 4:00 PM",
+    location: "Training Room B",
+    eventType: "training",
+    attachments: [
+      { name: "Conversion Checklist", url: "#", type: "pdf" },
+      { name: "Sample Scenarios", url: "#", type: "doc" },
+    ],
+  },
+
+  // Thu-Sat June 25-27 — MULTI-DAY: Agency Convention
+  {
+    id: "convention",
+    title: "TOLIA Agency Convention",
+    date: "2026-06-25",
+    endDate: "2026-06-27",
+    eventType: "social",
+    allDay: true,
+    location: "Batangas Convention Center",
+    description:
+      "Annual agency convention. All agents required to attend. Bus transportation provided from branch office.",
+    organizer: "Branch Manager",
+    attachments: [
+      { name: "Convention Program", url: "#", type: "pdf" },
+      { name: "Hotel Room Assignment", url: "#", type: "doc" },
+      { name: "Transportation Schedule", url: "#", type: "link" },
+    ],
+  },
+
+  // Fri June 26 — 2 events (shared with convention multi-day)
+  {
+    id: "finlit-26",
+    title: "Financial Literacy Seminar",
+    date: "2026-06-26",
+    startTime: "09:00",
+    endTime: "11:00",
+    time: "9:00 AM - 11:00 AM",
+    location: "Seminar Hall",
+    eventType: "training",
+  },
+  {
+    id: "happyhour-26",
+    title: "Team Happy Hour",
+    date: "2026-06-26",
+    startTime: "16:00",
+    endTime: "18:00",
+    time: "4:00 PM - 6:00 PM",
+    location: "Rooftop Lounge",
+    eventType: "social",
+  },
+
+  // Mon June 29 — 2 events
+  {
+    id: "gh-29",
+    title: "Green Hour Weekly Training",
+    date: "2026-06-29",
+    startTime: "10:00",
+    endTime: "11:00",
+    time: "10:00 AM - 11:00 AM",
+    eventType: "training",
+    isRecurring: true,
+    recurringPattern: "Every Monday",
+    rrule: "FREQ=WEEKLY;BYDAY=MO",
+  },
+  {
+    id: "eom-29",
+    title: "End-of-Month Performance Review",
+    date: "2026-06-29",
+    startTime: "15:00",
+    endTime: "17:00",
+    time: "3:00 PM - 5:00 PM",
+    eventType: "meeting",
+    description: "Month-end review of individual and unit performance targets.",
+    organizer: "Unit Manager",
+  },
+
+  // Tue June 30 — 2 events
+  {
+    id: "enroll-30",
+    title: "Enrollment Deadline - FYI",
+    date: "2026-06-30",
+    startTime: "17:00",
+    time: "5:00 PM",
+    eventType: "deadline",
+    description:
+      "Final day to enroll clients under the FYI (First Year Incentive) program.",
+  },
+  {
+    id: "goals-30",
+    title: "Mid-Year Goal Setting",
+    date: "2026-06-30",
+    startTime: "09:00",
+    endTime: "11:00",
+    time: "9:00 AM - 11:00 AM",
+    location: "Conference Room A",
+    eventType: "meeting",
+    description: "Set H2 goals and action plans with your unit manager.",
+    organizer: "Unit Manager",
+  },
+
+  // ── JULY 2026 ─────────────────────────────────────────
+
+  // Sat July 4 — Branch Assembly (first Saturday recurring)
+  {
+    id: "ba-jul",
+    title: "Branch Assembly",
+    date: "2026-07-04",
+    startTime: "09:00",
+    endTime: "12:00",
+    time: "9:00 AM - 12:00 PM",
+    location: "TOLIA Main Office",
+    eventType: "meeting",
+    isRecurring: true,
+    recurringPattern: "First Saturday of every month",
+    rrule: "FREQ=MONTHLY;BYDAY=1SA",
+    organizer: "Branch Manager",
+  },
+
+  // Mon July 6 — 3 days — MULTI-DAY: Product Bootcamp
+  {
+    id: "product-bootcamp",
+    title: "Product Knowledge Bootcamp",
+    date: "2026-07-06",
+    endDate: "2026-07-08",
+    startTime: "09:00",
+    endTime: "17:00",
+    time: "9:00 AM - 5:00 PM",
+    location: "Training Center",
+    eventType: "training",
+    description:
+      "Three-day intensive product training covering all Pru Life UK products. Certification required for all agents.",
+    organizer: "Training Department",
+    attachments: [
+      { name: "Bootcamp Schedule", url: "#", type: "pdf" },
+      { name: "Pre-Reading Materials", url: "#", type: "pdf" },
+    ],
+  },
 ]

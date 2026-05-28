@@ -5,7 +5,6 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/components/auth/auth-provider"
 import { Toaster } from "@/components/ui/sonner"
-import { OrganizationJsonLd } from "@/components/shared/json-ld"
 import { cn } from "@/lib/utils"
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
@@ -22,14 +21,16 @@ export const metadata: Metadata = {
     default: "TOLIA (Tolentino Life Insurance Agency) \u2014 Pru Life UK",
     template: "%s | TOLIA \u2014 Pru Life UK",
   },
-  description: "Empowering Pru Life UK agents to succeed with resources, training, and support.",
+  description:
+    "Empowering Pru Life UK agents to succeed with resources, training, and support.",
   metadataBase: new URL(siteUrl),
   icons: {
     icon: "/icon.png",
   },
   openGraph: {
     title: "TOLIA (Tolentino Life Insurance Agency) \u2014 Pru Life UK",
-    description: "Empowering Pru Life UK agents to succeed with resources, training, and support.",
+    description:
+      "Empowering Pru Life UK agents to succeed with resources, training, and support.",
     url: siteUrl,
     siteName: "TOLIA",
     locale: "en_PH",
@@ -46,7 +47,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "TOLIA (Tolentino Life Insurance Agency) \u2014 Pru Life UK",
-    description: "Empowering Pru Life UK agents to succeed with resources, training, and support.",
+    description:
+      "Empowering Pru Life UK agents to succeed with resources, training, and support.",
     images: ["/tolia-full.png"],
   },
   robots: {
@@ -64,16 +66,20 @@ export default function RootLayout({
     <html
       lang="en-PH"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", geist.variable)}
+      className={cn(
+        "antialiased",
+        fontMono.variable,
+        "font-sans",
+        geist.variable
+      )}
     >
       <body>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-background focus:px-4 focus:py-2 focus:text-foreground focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:bg-background focus:px-4 focus:py-2 focus:text-foreground focus:shadow-lg focus:ring-2 focus:ring-primary focus:outline-none"
         >
           Skip to main content
         </a>
-        <OrganizationJsonLd />
         <ThemeProvider>
           <AuthProvider>
             {children}

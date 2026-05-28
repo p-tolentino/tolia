@@ -31,16 +31,48 @@ export interface ResourceItem {
   updatedAt?: string
 }
 
+export type EventStatus = "draft" | "published" | "cancelled" | "rescheduled"
+
+export interface EventAttachment {
+  name: string
+  url: string
+  type: "pdf" | "doc" | "image" | "link" | "other"
+}
+
 export interface CalendarEvent {
   id: string
   title: string
   description?: string
+
+  // Dates (YYYY-MM-DD)
   date: string
+  endDate?: string
+
+  // Times (24h HH:mm)
+  startTime?: string
+  endTime?: string
   time?: string
+  allDay?: boolean
+
+  // Location
   location?: string
+  locationUrl?: string
+
+  // Categorization
   eventType: "training" | "meeting" | "deadline" | "social" | "exam"
+  status?: EventStatus
+  organizer?: string
+
+  // Recurrence
   isRecurring?: boolean
   recurringPattern?: string
+  rrule?: string
+
+  // Attachments
+  attachments?: EventAttachment[]
+
+  // Links
+  registrationUrl?: string
   href?: string
 }
 

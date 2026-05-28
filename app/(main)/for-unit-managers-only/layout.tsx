@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 import { isUmRole } from "@/lib/auth/roles"
 import { getCurrentAgentRole } from "@/app/actions/agents"
+import { RoleGate } from "@/components/auth/role-gate"
 
 export default async function UmOnlyLayout({
   children,
@@ -13,5 +14,5 @@ export default async function UmOnlyLayout({
     redirect("/unauthorized")
   }
 
-  return <>{children}</>
+  return <RoleGate>{children}</RoleGate>
 }

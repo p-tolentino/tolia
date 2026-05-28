@@ -24,7 +24,7 @@ export default function ComingSoonPage() {
           <Link href="/">Back to Home</Link>
         </Button>
         <Button variant="outline" asChild>
-          <Link href="/pru-calendar">View Calendar</Link>
+          <Link href="/schedules/pru-calendar">View Calendar</Link>
         </Button>
       </div>
     </div>

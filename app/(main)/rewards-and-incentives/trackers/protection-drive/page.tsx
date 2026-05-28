@@ -14,7 +14,7 @@ export default function ProtectionDrivePage() {
   return (
     <SectionWrapper>
       <PageHeader title={protectionDrive.title} description={protectionDrive.description} 
-        breadcrumbs={getBreadcrumbs("/trackers/protection-drive")}
+        breadcrumbs={getBreadcrumbs("/rewards-and-incentives/trackers/protection-drive")}
       />
       <div className="mt-8">
         <ContentSection sections={protectionDrive.sections} />
