@@ -5,6 +5,7 @@ import { createAdminClient } from "./lib/supabase/admin"
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
+  let supabaseResponse = NextResponse.next({ request })
 
   try {
     const supabase = createServerClient(
@@ -46,8 +47,6 @@ export async function proxy(request: NextRequest) {
 
       return NextResponse.next({ request })
     }
-
-    let supabaseResponse = NextResponse.next({ request })
 
     const { data: existingAgent } = await admin
       .from("agents")

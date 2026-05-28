@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function RookieHighFlyersClubPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={rookieHighFlyersClub.title} description={rookieHighFlyersClub.description} />
+      <PageHeader title={rookieHighFlyersClub.title} description={rookieHighFlyersClub.description} 
+        breadcrumbs={getBreadcrumbs("/new-recruits/rookie-high-flyers-club")}
+      />
       <div className="mt-8">
         <ContentSection sections={rookieHighFlyersClub.sections} />
       </div>

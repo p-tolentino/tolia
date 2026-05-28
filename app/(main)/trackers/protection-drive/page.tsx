@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function ProtectionDrivePage() {
   return (
     <SectionWrapper>
-      <PageHeader title={protectionDrive.title} description={protectionDrive.description} />
+      <PageHeader title={protectionDrive.title} description={protectionDrive.description} 
+        breadcrumbs={getBreadcrumbs("/trackers/protection-drive")}
+      />
       <div className="mt-8">
         <ContentSection sections={protectionDrive.sections} />
       </div>

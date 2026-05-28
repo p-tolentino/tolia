@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function AllAboutDigitalPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={allAboutDigital.title} description={allAboutDigital.description} />
+      <PageHeader title={allAboutDigital.title} description={allAboutDigital.description} 
+        breadcrumbs={getBreadcrumbs("/agent-support/all-about-digital")}
+      />
       <div className="mt-8">
         <ContentSection sections={allAboutDigital.sections} />
       </div>

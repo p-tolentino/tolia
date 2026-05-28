@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -15,6 +16,8 @@ export default function OnboardingPage() {
       <PageHeader
         title={onboarding.title}
         description={onboarding.description}
+      
+        breadcrumbs={getBreadcrumbs("/new-recruits/onboarding")}
       />
       <div className="mt-8">
         <ContentSection sections={onboarding.sections} />

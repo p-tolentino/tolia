@@ -26,33 +26,28 @@ import { navigationItems } from "@/lib/navigation"
 import Image from "next/image"
 
 export function MobileNav() {
-  const [open, setOpen] = React.useState(false)
   const raw = usePathname()
   const pathname = raw === "/" ? "/" : raw.replace(/\/$/, "")
   const { agent } = useAuth()
 
-  React.useEffect(() => {
-    setOpen(false)
-  }, [raw])
-
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet key={raw}>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
           size="icon"
-          className="md:hidden"
+          className="2xl:hidden"
           aria-label="Open menu"
         >
           <Menu className="size-5" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="w-75 p-0 sm:max-w-sm">
+      <SheetContent side="right" className="w-[85vw] p-0 sm:max-w-sm">
         <SheetHeader className="flex flex-row items-center justify-between border-b px-4 py-3">
           <SheetTitle>
             <Image
               src="/tolia-full.png"
-              alt="TOLIA"
+              alt="TOLIA navigation logo"
               className="h-7 w-auto"
               height={1000}
               width={1000}
@@ -60,7 +55,7 @@ export function MobileNav() {
           </SheetTitle>
         </SheetHeader>
         <ScrollArea className="h-[calc(100vh-140px)] px-4 py-2">
-          <nav className="flex flex-col gap-1">
+          <nav aria-label="Main navigation" className="flex flex-col gap-1">
             {navigationItems
               .filter((item) => {
                 if (item.umOnly && !isUmRole(agent?.role)) return false

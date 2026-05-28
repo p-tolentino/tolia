@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function OnboardingMaterialsPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={onboardingMaterials.title} description={onboardingMaterials.description} />
+      <PageHeader title={onboardingMaterials.title} description={onboardingMaterials.description} 
+        breadcrumbs={getBreadcrumbs("/for-unit-managers-only/onboarding-materials")}
+      />
       <div className="mt-8">
         <ContentSection sections={onboardingMaterials.sections} />
       </div>

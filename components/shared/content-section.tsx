@@ -2,6 +2,7 @@ import type { ComponentType } from "react"
 import { FileText, Video, FileSpreadsheet, FileImage, Link as LinkIcon } from "lucide-react"
 import { CardGrid } from "./card-grid"
 import { ContentCard } from "./content-card"
+import { EmptyStatePlaceholder } from "./empty-state"
 import type { PageSection } from "@/lib/types"
 
 const fileTypeIcons: Record<string, ComponentType<{ className?: string }>> = {
@@ -20,6 +21,14 @@ interface ContentSectionProps {
 }
 
 export function ContentSection({ sections, itemIcons }: ContentSectionProps) {
+  const hasAnyContent = sections.some(
+    (s) => (s.items && s.items.length > 0) || (s.documents && s.documents.length > 0)
+  )
+
+  if (!hasAnyContent) {
+    return <EmptyStatePlaceholder />
+  }
+
   return (
     <div className="space-y-6">
       {sections.map((section) => (
@@ -52,7 +61,7 @@ export function ContentSection({ sections, itemIcons }: ContentSectionProps) {
                         <Icon className="size-4" />
                       </div>
                     )}
-                    <span className="flex-1">{doc.name}</span>
+                    <span className="flex-1 break-words">{doc.name}</span>
                   </div>
                 )
               })}

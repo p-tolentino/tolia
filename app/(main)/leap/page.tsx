@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function LeapPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={leapContent.title} description={leapContent.description} />
+      <PageHeader title={leapContent.title} description={leapContent.description} 
+        breadcrumbs={getBreadcrumbs("/leap")}
+      />
       <div className="mt-8">
         <ContentSection sections={leapContent.sections} />
       </div>

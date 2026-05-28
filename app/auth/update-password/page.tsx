@@ -2,11 +2,11 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { updateUserPassword } from "@/app/actions/auth"
 import { toast } from "sonner"
 
 export default function UpdatePasswordPage() {
@@ -35,11 +35,10 @@ export default function UpdatePasswordPage() {
       return
     }
 
-    const supabase = createClient()
-    const { error: updateError } = await supabase.auth.updateUser({ password })
+    const result = await updateUserPassword(password)
 
-    if (updateError) {
-      setError(updateError.message)
+    if (result.error) {
+      setError(result.error)
       setLoading(false)
       return
     }
@@ -54,7 +53,7 @@ export default function UpdatePasswordPage() {
         <div className="text-center">
           <Image
             src="/tolia-full.png"
-            alt="TOLIA"
+            alt="TOLIA set password"
             className="mx-auto h-10 w-auto"
             height={1000}
             width={1000}

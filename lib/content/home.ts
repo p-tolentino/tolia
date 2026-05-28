@@ -38,6 +38,16 @@ export const homeContent = {
           description: "Events, greetings, and community",
         },
         {
+          label: "Rewards & Incentives",
+          href: "/rewards-and-incentives",
+          description: "Incentive programs and performance trackers",
+        },
+        {
+          label: "Schedules",
+          href: "/schedules",
+          description: "Client forum and PRU calendar",
+        },
+        {
           label: "For UMs Only",
           href: "/for-unit-managers-only",
           description: "Exclusive UM resources and tools",

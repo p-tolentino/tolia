@@ -1,4 +1,5 @@
 import type { PageContent } from "../types"
+import { STANDARD_BODY } from "./constants"
 
 export const socialsLanding: PageContent = {
   title: "Socials",
@@ -18,7 +19,7 @@ export const greetings: PageContent = {
   title: "Greetings",
   description: "Birthday greetings and celebrations for TOLIA agents.",
   sections: [
-    { heading: "Overview", body: "This section is under construction. Birthday data and greeting features are being prepared. Please check back later." },
+    { heading: "Overview", body: STANDARD_BODY },
   ],
 }
 
@@ -26,7 +27,7 @@ export const socialsEvents: PageContent = {
   title: "Events",
   description: "Event photos and videos.",
   sections: [
-    { heading: "Photos", body: "This section is under construction. Event photos are being prepared. Please check back later." },
-    { heading: "Videos", body: "This section is under construction. Event videos are being prepared. Please check back later." },
+    { heading: "Photos", body: STANDARD_BODY },
+    { heading: "Videos", body: STANDARD_BODY },
   ],
 }

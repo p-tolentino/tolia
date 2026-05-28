@@ -49,6 +49,12 @@ export interface BreadcrumbItem {
   href: string
 }
 
+export interface TimelineItem {
+  title: string
+  description: string
+  icon: string
+}
+
 export interface PageContent {
   title: string
   description: string
@@ -60,4 +66,5 @@ export interface PageSection {
   body?: string
   items?: { label: string; href: string; description?: string }[]
   documents?: { name: string; url?: string; type: string }[]
+  timeline?: TimelineItem[]
 }

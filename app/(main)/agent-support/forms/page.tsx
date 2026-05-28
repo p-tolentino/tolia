@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { SectionWrapper } from "@/components/shared/section-wrapper"
@@ -13,7 +14,9 @@ export default function FormsPage() {
   const tabs = forms.sections.map((s) => ({ label: s.heading, section: s }))
   return (
     <SectionWrapper>
-      <PageHeader title={forms.title} description={forms.description} />
+      <PageHeader title={forms.title} description={forms.description} 
+        breadcrumbs={getBreadcrumbs("/agent-support/forms")}
+      />
       <TabbedContent tabs={tabs} />
     </SectionWrapper>
   )

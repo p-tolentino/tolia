@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { FileText, BookOpen, Users, TrendingUp, ClipboardList, FileSpreadsheet, Award, UserCheck, Gift } from "lucide-react"
 import { PageHeader } from "@/components/shared/page-header"
@@ -25,7 +26,9 @@ export const metadata: Metadata = {
 export default function ForUnitManagersOnlyPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={forUnitManagersOnlyLanding.title} description={forUnitManagersOnlyLanding.description} />
+      <PageHeader title={forUnitManagersOnlyLanding.title} description={forUnitManagersOnlyLanding.description} 
+        breadcrumbs={getBreadcrumbs("/for-unit-managers-only")}
+      />
       <div className="mt-8">
         <ContentSection sections={forUnitManagersOnlyLanding.sections} itemIcons={itemIcons} />
       </div>

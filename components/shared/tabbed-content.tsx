@@ -2,6 +2,7 @@
 
 import { FileText, Video, FileSpreadsheet, FileImage, Link as LinkIcon } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { EmptyStatePlaceholder } from "./empty-state"
 import type { PageSection } from "@/lib/types"
 import type { ComponentType } from "react"
 
@@ -21,6 +22,16 @@ interface TabbedContentProps {
 }
 
 export function TabbedContent({ tabs, defaultValue }: TabbedContentProps) {
+  const hasAnyContent = tabs.some(
+    (t) =>
+      (t.section.items && t.section.items.length > 0) ||
+      (t.section.documents && t.section.documents.length > 0)
+  )
+
+  if (!hasAnyContent) {
+    return <EmptyStatePlaceholder />
+  }
+
   return (
     <Tabs defaultValue={defaultValue ?? tabs[0]?.label} className="mt-6">
       <TabsList>

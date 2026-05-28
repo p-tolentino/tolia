@@ -10,7 +10,7 @@ export default function MainLayout({
   return (
     <>
       <Header />
-      <main className="pt-16">
+      <main id="main-content" className="pt-16">
         <ViewTransition enter="auto" default="none">
           {children}
         </ViewTransition>

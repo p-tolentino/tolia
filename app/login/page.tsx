@@ -90,7 +90,7 @@ function LoginForm() {
         <div className="text-center">
           <Image
             src="/tolia-full.png"
-            alt="TOLIA"
+            alt="TOLIA login page"
             className="mx-auto h-10 w-auto"
             height={1000}
             width={1000}

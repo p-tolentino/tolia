@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { Award, TrendingUp } from "lucide-react"
 import { PageHeader } from "@/components/shared/page-header"
@@ -18,7 +19,9 @@ export const metadata: Metadata = {
 export default function TrackersPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={trackersLanding.title} description={trackersLanding.description} />
+      <PageHeader title={trackersLanding.title} description={trackersLanding.description} 
+        breadcrumbs={getBreadcrumbs("/trackers")}
+      />
       <div className="mt-8">
         <ContentSection sections={trackersLanding.sections} itemIcons={itemIcons} />
       </div>

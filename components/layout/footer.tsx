@@ -1,23 +1,12 @@
 import Link from "next/link"
 import Image from "next/image"
-import { createClient } from "@/lib/supabase/server"
 import { isUmRole } from "@/lib/auth/roles"
+import { getCurrentAgentRole } from "@/app/actions/agents"
 import { navigationItems } from "@/lib/navigation"
 
 export async function Footer() {
-  let isUm = false
-  try {
-    const supabase = await createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (user) {
-      const { data: agent } = await supabase
-        .from("agents")
-        .select("role")
-        .eq("id", user.id)
-        .single()
-      if (agent) isUm = isUmRole(agent.role)
-    }
-  } catch {}
+  const role = await getCurrentAgentRole()
+  const isUm = isUmRole(role)
 
   const visibleItems = navigationItems.filter((item) => {
     if (item.umOnly && !isUm) return false
@@ -28,11 +17,11 @@ export async function Footer() {
   return (
     <footer className="border-t bg-muted/50">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <div>
             <Image
               src="/tolia-full.png"
-              alt="TOLIA"
+              alt="TOLIA footer logo"
               className="mb-3 h-10 w-auto"
               height={1000}
               width={1000}
@@ -44,7 +33,7 @@ export async function Footer() {
           </div>
           <div>
             <h4 className="mb-3 text-sm font-semibold">Quick Links</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <ul className="grid grid-cols-1 gap-2 text-sm text-muted-foreground sm:grid-cols-2">
               {visibleItems.map((item) => (
                 <li key={item.title}>
                   <Link
@@ -57,65 +46,12 @@ export async function Footer() {
               ))}
             </ul>
           </div>
-          <div>
-            <h4 className="mb-3 text-sm font-semibold">Resources</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link
-                  href="/agent-support"
-                  className="transition-colors hover:text-foreground"
-                >
-                  Agent Support
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/rookie-support"
-                  className="transition-colors hover:text-foreground"
-                >
-                  Rookie Support
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/social-media-materials"
-                  className="transition-colors hover:text-foreground"
-                >
-                  Social Media Materials
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/products"
-                  className="transition-colors hover:text-foreground"
-                >
-                  Products
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/pru-calendar"
-                  className="transition-colors hover:text-foreground"
-                >
-                  Pru Calendar
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/recruitment"
-                  className="transition-colors hover:text-foreground"
-                >
-                  Recruitment
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
+
+          <div className="lg:ml-6">
             <h4 className="mb-3 text-sm font-semibold">Contact</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>ADDRESS?</li>
-              <li>NUMBER?</li>
-              <li>EMAIL?</li>
+              <li>Contact your Unit Manager for details</li>
+              <li>support@tolia-pru.ph</li>
             </ul>
           </div>
         </div>

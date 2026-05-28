@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function ReviewerPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={reviewer.title} description={reviewer.description} />
+      <PageHeader title={reviewer.title} description={reviewer.description} 
+        breadcrumbs={getBreadcrumbs("/new-recruits/reviewer")}
+      />
       <div className="mt-8">
         <ContentSection sections={reviewer.sections} />
       </div>

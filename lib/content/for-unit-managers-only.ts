@@ -1,4 +1,5 @@
 import type { PageContent } from "../types"
+import { STANDARD_BODY } from "./constants"
 
 export const forUnitManagersOnlyLanding: PageContent = {
   title: "For Unit Managers Only",
@@ -62,10 +63,7 @@ export const unitBusinessPlan: PageContent = {
   title: "Unit Business Plan",
   description: "Develop, track, and manage your unit business plan.",
   sections: [
-    {
-      heading: "Overview",
-      body: "This section is under construction. Resources and content are being prepared. Please check back later.",
-    },
+    { heading: "Overview", body: STANDARD_BODY },
     {
       heading: "Downloads",
       documents: [
@@ -80,10 +78,7 @@ export const onboardingMaterials: PageContent = {
   title: "Onboarding Materials",
   description: "Onboarding materials for new agents joining your unit.",
   sections: [
-    {
-      heading: "Overview",
-      body: "This section is under construction. Resources and content are being prepared. Please check back later.",
-    },
+    { heading: "Overview", body: STANDARD_BODY },
     {
       heading: "Downloads",
       documents: [
@@ -99,10 +94,7 @@ export const oneOnOneEngagement: PageContent = {
   title: "One-on-One Engagement",
   description: "Tools and templates for one-on-one coaching sessions.",
   sections: [
-    {
-      heading: "Overview",
-      body: "This section is under construction. Resources and content are being prepared. Please check back later.",
-    },
+    { heading: "Overview", body: STANDARD_BODY },
     {
       heading: "Downloads",
       documents: [
@@ -117,10 +109,7 @@ export const promotionParameters: PageContent = {
   title: "Promotion Parameters",
   description: "Promotion criteria, parameters, and guidelines.",
   sections: [
-    {
-      heading: "Overview",
-      body: "This section is under construction. Resources and content are being prepared. Please check back later.",
-    },
+    { heading: "Overview", body: STANDARD_BODY },
     {
       heading: "Downloads",
       documents: [
@@ -135,10 +124,7 @@ export const tappMaterials: PageContent = {
   title: "TAPP Materials",
   description: "TAPP program materials, guides, and resources.",
   sections: [
-    {
-      heading: "Overview",
-      body: "This section is under construction. Resources and content are being prepared. Please check back later.",
-    },
+    { heading: "Overview", body: STANDARD_BODY },
     {
       heading: "Downloads",
       documents: [{ name: "TAPP Program Guide (PDF)", type: "pdf" }],
@@ -150,10 +136,7 @@ export const minutesOfTheMeeting: PageContent = {
   title: "Minutes of the Meeting",
   description: "Meeting minutes templates and archives.",
   sections: [
-    {
-      heading: "Overview",
-      body: "This section is under construction. Resources and content are being prepared. Please check back later.",
-    },
+    { heading: "Overview", body: STANDARD_BODY },
     {
       heading: "Downloads",
       documents: [
@@ -169,14 +152,8 @@ export const mdrtCenterOfFieldLeadership: PageContent = {
   description:
     "MDRT leadership development resources — Recruitment and Activation.",
   sections: [
-    {
-      heading: "Recruitment",
-      body: "This section is under construction. Resources and content are being prepared. Please check back later.",
-    },
-    {
-      heading: "Activation",
-      body: "This section is under construction. Resources and content are being prepared. Please check back later.",
-    },
+    { heading: "Recruitment", body: STANDARD_BODY },
+    { heading: "Activation", body: STANDARD_BODY },
   ],
 }
 
@@ -184,9 +161,6 @@ export const agentsDirectory: PageContent = {
   title: "Agents Directory",
   description: "Complete directory of TOLIA agents.",
   sections: [
-    {
-      heading: "Overview",
-      body: "This section is under construction. An interactive agent directory is being prepared. Please check back later.",
-    },
+    { heading: "Overview", body: STANDARD_BODY },
   ],
 }

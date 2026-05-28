@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { SectionWrapper } from "@/components/shared/section-wrapper"
@@ -13,7 +14,9 @@ export default function SocialsEventsPage() {
   const tabs = socialsEvents.sections.map((s) => ({ label: s.heading, section: s }))
   return (
     <SectionWrapper>
-      <PageHeader title={socialsEvents.title} description={socialsEvents.description} />
+      <PageHeader title={socialsEvents.title} description={socialsEvents.description} 
+        breadcrumbs={getBreadcrumbs("/socials/events")}
+      />
       <TabbedContent tabs={tabs} />
     </SectionWrapper>
   )

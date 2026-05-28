@@ -9,6 +9,8 @@ import {
   Zap,
   Calendar as CalendarIcon,
   Share2,
+  Award,
+  CalendarDays,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,8 +21,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { SectionWrapper } from "@/components/shared/section-wrapper"
-import { createClient } from "@/lib/supabase/server"
 import { isUmRole } from "@/lib/auth/roles"
+import { getCurrentAgentRole } from "@/app/actions/agents"
 import { homeContent, heroContent } from "@/lib/content/home"
 
 export const metadata: Metadata = {
@@ -42,24 +44,13 @@ const sectionIcons: Record<
   LEAP: Zap,
   Assemblies: CalendarIcon,
   Socials: Share2,
+  "Rewards & Incentives": Award,
+  Schedules: CalendarDays,
 }
 
 export default async function HomePage() {
-  let isUm = false
-  try {
-    const supabase = await createClient()
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
-    if (user) {
-      const { data: agent } = await supabase
-        .from("agents")
-        .select("role")
-        .eq("id", user.id)
-        .single()
-      if (agent) isUm = isUmRole(agent.role)
-    }
-  } catch {}
+  const role = await getCurrentAgentRole()
+  const isUm = isUmRole(role)
 
   const quickLinks = (homeContent.sections[0]?.items ?? []).filter(
     (item) => !("umOnly" in item && item.umOnly && !isUm)
@@ -111,39 +102,35 @@ export default async function HomePage() {
             return (
               <Link key={section.href} href={section.href}>
                 {/* Mobile: compact inline row */}
-                <div className="group flex cursor-pointer items-center gap-3 rounded-lg border bg-card p-3 transition-all duration-300 hover:border-primary hover:bg-primary sm:hidden">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-all duration-300 group-hover:bg-white/20 group-hover:text-white">
-                    <span className="transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                <div className="group flex cursor-pointer items-center gap-3 rounded-lg border bg-card p-3 transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 sm:hidden">
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary/20">
+                    <span className="transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
                       {Icon && <Icon className="size-5" />}
                     </span>
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="truncate text-sm font-medium text-foreground transition-colors duration-300 group-hover:text-white">
+                    <div className="truncate text-sm font-medium text-foreground">
                       {section.label}
                     </div>
-                    <div className="truncate text-xs text-muted-foreground transition-colors duration-300 group-hover:text-white/80">
+                    <div className="truncate text-xs text-muted-foreground">
                       {section.description}
                     </div>
                   </div>
-                  <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-colors duration-300 group-hover:text-white" />
+                  <ArrowRight className="size-4 shrink-0 text-muted-foreground" />
                 </div>
                 {/* Desktop: full card */}
-                <Card className="group hidden h-full cursor-pointer transition-all duration-300 hover:border-primary hover:bg-primary/80 sm:block">
+                <Card className="group hidden h-full cursor-pointer transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 sm:block">
                   <CardHeader>
-                    <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-all duration-300 group-hover:bg-white/20 group-hover:text-white">
-                      <span className="transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                    <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary/20">
+                      <span className="transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
                         {Icon && <Icon className="size-5" />}
                       </span>
                     </div>
-                    <CardTitle className="text-base transition-colors duration-300 group-hover:text-white">
-                      {section.label}
-                    </CardTitle>
-                    <CardDescription className="transition-colors duration-300 group-hover:text-white/80">
-                      {section.description}
-                    </CardDescription>
+                    <CardTitle className="text-base">{section.label}</CardTitle>
+                    <CardDescription>{section.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <span className="inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors duration-300 group-hover:text-white">
+                    <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
                       View{" "}
                       <ArrowRight className="size-3 transition-all duration-300 group-hover:translate-x-0.5" />
                     </span>

@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { Heart, Camera } from "lucide-react"
 import { PageHeader } from "@/components/shared/page-header"
@@ -18,7 +19,9 @@ export const metadata: Metadata = {
 export default function SocialsPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={socialsLanding.title} description={socialsLanding.description} />
+      <PageHeader title={socialsLanding.title} description={socialsLanding.description} 
+        breadcrumbs={getBreadcrumbs("/socials")}
+      />
       <div className="mt-8">
         <ContentSection sections={socialsLanding.sections} itemIcons={itemIcons} />
       </div>

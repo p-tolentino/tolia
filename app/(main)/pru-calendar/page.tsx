@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { SectionWrapper } from "@/components/shared/section-wrapper"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function PruCalendarPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={pruCalendarContent.title} description={pruCalendarContent.description} />
+      <PageHeader title={pruCalendarContent.title} description={pruCalendarContent.description} 
+        breadcrumbs={getBreadcrumbs("/pru-calendar")}
+      />
       <div className="mt-8">
         <div className="mb-6 flex flex-wrap gap-3">
           {[

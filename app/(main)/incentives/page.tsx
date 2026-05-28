@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function IncentivesPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={incentivesContent.title} description={incentivesContent.description} />
+      <PageHeader title={incentivesContent.title} description={incentivesContent.description} 
+        breadcrumbs={getBreadcrumbs("/incentives")}
+      />
       <div className="mt-8">
         <ContentSection sections={incentivesContent.sections} />
       </div>

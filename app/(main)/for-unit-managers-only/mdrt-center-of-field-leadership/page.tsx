@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { SectionWrapper } from "@/components/shared/section-wrapper"
@@ -13,7 +14,9 @@ export default function MdrtCenterOfFieldLeadershipPage() {
   const tabs = mdrtCenterOfFieldLeadership.sections.map((s) => ({ label: s.heading, section: s }))
   return (
     <SectionWrapper>
-      <PageHeader title={mdrtCenterOfFieldLeadership.title} description={mdrtCenterOfFieldLeadership.description} />
+      <PageHeader title={mdrtCenterOfFieldLeadership.title} description={mdrtCenterOfFieldLeadership.description} 
+        breadcrumbs={getBreadcrumbs("/for-unit-managers-only/mdrt-center-of-field-leadership")}
+      />
       <TabbedContent tabs={tabs} />
     </SectionWrapper>
   )

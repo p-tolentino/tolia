@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function PromotionParametersPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={promotionParameters.title} description={promotionParameters.description} />
+      <PageHeader title={promotionParameters.title} description={promotionParameters.description} 
+        breadcrumbs={getBreadcrumbs("/for-unit-managers-only/promotion-parameters")}
+      />
       <div className="mt-8">
         <ContentSection sections={promotionParameters.sections} />
       </div>

@@ -1,4 +1,4 @@
-import type { NavItem, NavSubItem } from "./types"
+import type { BreadcrumbItem, NavItem, NavSubItem } from "./types"
 
 export const navigationItems: NavItem[] = [
   { title: "Home", href: "/", icon: "Home" },
@@ -130,7 +130,7 @@ export const navigationItems: NavItem[] = [
   },
   {
     title: "Rewards & Incentives",
-    href: "/recognition",
+    href: "/rewards-and-incentives",
     icon: "Award",
     children: [
       {
@@ -224,7 +224,7 @@ export const navigationItems: NavItem[] = [
   },
   {
     title: "Schedules",
-    href: "/client-forum",
+    href: "/schedules",
     icon: "Calendar",
     children: [
       {
@@ -262,10 +262,34 @@ export function getSidebarItems(section: string): NavSubItem[] {
   return item?.children ?? []
 }
 
+export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
+  const crumbs: BreadcrumbItem[] = [{ label: "Home", href: "/" }]
+
+  for (const item of navigationItems) {
+    if (!item.children) continue
+
+    const matchedChild = item.children.find((c) => c.href === pathname)
+    if (matchedChild) {
+      if (item.href && item.href !== "/") {
+        crumbs.push({ label: item.title, href: item.href })
+      }
+      crumbs.push({ label: matchedChild.title, href: matchedChild.href })
+      return crumbs
+    }
+
+    if (item.href && item.href === pathname && item.href !== "/") {
+      crumbs.push({ label: item.title, href: item.href })
+      return crumbs
+    }
+  }
+
+  return crumbs
+}
+
 export const siteConfig = {
   name: "TOLIA",
   tagline: "Tolentino Life Insurance Agency \u2014 A Pru Life UK Branch",
   description:
     "Empowering Pru Life UK agents to succeed with resources, training, and support.",
-  url: "https://tolia-pru.ph",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://tolia-pru.ph",
 }

@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function MdrtMaterialsPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={mdrtMaterials.title} description={mdrtMaterials.description} />
+      <PageHeader title={mdrtMaterials.title} description={mdrtMaterials.description} 
+        breadcrumbs={getBreadcrumbs("/agent-support/mdrt-materials")}
+      />
       <div className="mt-8">
         <ContentSection sections={mdrtMaterials.sections} />
       </div>

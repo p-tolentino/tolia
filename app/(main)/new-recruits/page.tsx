@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import {
   GitBranch,
@@ -39,6 +40,8 @@ export default function NewRecruitsPage() {
       <PageHeader
         title={newRecruitsLanding.title}
         description={newRecruitsLanding.description}
+      
+        breadcrumbs={getBreadcrumbs("/new-recruits")}
       />
       <div className="mt-8">
         <ContentSection

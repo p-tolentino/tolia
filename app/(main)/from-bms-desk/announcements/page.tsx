@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function AnnouncementsPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={announcements.title} description={announcements.description} />
+      <PageHeader title={announcements.title} description={announcements.description} 
+        breadcrumbs={getBreadcrumbs("/from-bms-desk/announcements")}
+      />
       <div className="mt-8">
         <ContentSection sections={announcements.sections} />
       </div>

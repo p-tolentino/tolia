@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function IcExamSchedulePage() {
   return (
     <SectionWrapper>
-      <PageHeader title={icExamSchedule.title} description={icExamSchedule.description} />
+      <PageHeader title={icExamSchedule.title} description={icExamSchedule.description} 
+        breadcrumbs={getBreadcrumbs("/new-recruits/ic-exam-schedule")}
+      />
       <div className="mt-8">
         <ContentSection sections={icExamSchedule.sections} />
       </div>

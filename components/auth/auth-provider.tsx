@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import type { User } from "@supabase/supabase-js"
+import { getAgentProfile } from "@/app/actions/agents"
 
 interface Agent {
   agent_code: string
@@ -35,14 +36,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [agent, setAgent] = useState<Agent | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const fetchAgent = async (userId: string) => {
-    const supabase = createClient()
-    const { data } = await supabase
-      .from("agents")
-      .select("agent_code, first_name, last_name, avatar_url, role")
-      .eq("id", userId)
-      .single()
-    if (data) setAgent(data as Agent)
+  const fetchAgent = async () => {
+    const profile: Agent | null = await getAgentProfile()
+    if (profile) {
+      setAgent(profile)
+    }
   }
 
   useEffect(() => {
@@ -51,7 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user)
       if (user) {
-        fetchAgent(user.id)
+        fetchAgent()
       }
       setLoading(false)
     })
@@ -61,7 +59,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
       if (session?.user) {
-        fetchAgent(session.user.id)
+        fetchAgent()
       } else {
         setAgent(null)
       }
@@ -72,7 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, agent, loading, refreshAgent: () => fetchAgent(user?.id ?? "") }}
+      value={{ user, agent, loading, refreshAgent: () => fetchAgent() }}
     >
       {children}
     </AuthContext.Provider>

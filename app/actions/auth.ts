@@ -126,6 +126,13 @@ export async function getCurrentAgent() {
   return data
 }
 
+export async function updateUserPassword(password: string) {
+  const supabase = await createServerClient()
+  const { error } = await supabase.auth.updateUser({ password })
+  if (error) return { error: error.message }
+  return { success: true }
+}
+
 export async function requestPasswordSetup(formData: FormData) {
   const agentCode = (formData.get("agent_code") as string)?.toUpperCase()
 

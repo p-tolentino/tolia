@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { useAuth } from "@/components/auth/auth-provider"
 import { signOut } from "@/app/actions/auth"
 import { Button } from "@/components/ui/button"
@@ -13,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { LogOut } from "lucide-react"
+import { LogOut, User } from "lucide-react"
 import { toast } from "sonner"
 
 export function UserButton() {
@@ -34,7 +35,7 @@ export function UserButton() {
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="size-8 rounded-full">
           <Avatar className="size-8">
@@ -48,7 +49,10 @@ export function UserButton() {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56 max-w-[calc(100vw-2rem)]">
+      <DropdownMenuContent
+        align="end"
+        className="w-56 max-w-[calc(100vw-2rem)]"
+      >
         <DropdownMenuLabel>
           <div className="flex flex-col">
             <span className="font-medium">
@@ -59,6 +63,13 @@ export function UserButton() {
             </span>
           </div>
         </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/profile">
+            <User className="mr-2 size-4" />
+            Profile
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut}>
           <LogOut className="mr-2 size-4" />

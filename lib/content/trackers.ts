@@ -1,4 +1,5 @@
 import type { PageContent } from "../types"
+import { STANDARD_BODY } from "./constants"
 
 export const trackersLanding: PageContent = {
   title: "Trackers",
@@ -18,7 +19,7 @@ export const achieversClub: PageContent = {
   title: "Achievers Club",
   description: "Track your Achievers Club qualifications and progress.",
   sections: [
-    { heading: "Overview", body: "This section is under construction. Resources and content are being prepared. Please check back later." },
+    { heading: "Overview", body: STANDARD_BODY },
     { heading: "Downloads", documents: [{ name: "Achievers Club Guidelines (PDF)", type: "pdf" }, { name: "Qualification Tracker (XLS)", type: "xls" }] },
   ],
 }
@@ -27,7 +28,7 @@ export const protectionDrive: PageContent = {
   title: "Protection Drive",
   description: "Protection drive performance and progress tracker.",
   sections: [
-    { heading: "Overview", body: "This section is under construction. Resources and content are being prepared. Please check back later." },
+    { heading: "Overview", body: STANDARD_BODY },
     { heading: "Downloads", documents: [{ name: "Protection Drive Tracker (XLS)", type: "xls" }, { name: "Campaign Guidelines (PDF)", type: "pdf" }] },
   ],
 }

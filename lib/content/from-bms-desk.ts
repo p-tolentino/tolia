@@ -1,4 +1,5 @@
 import type { PageContent } from "../types"
+import { STANDARD_BODY } from "./constants"
 
 export const fromBmsDeskContent: PageContent = {
   title: "From BM\u2019s Desk",
@@ -18,7 +19,7 @@ export const announcements: PageContent = {
   title: "Announcements",
   description: "Latest announcements and updates from the Branch Manager.",
   sections: [
-    { heading: "Latest Updates", body: "This section is under construction. Resources and content are being prepared. Please check back later." },
+    { heading: "Latest Updates", body: STANDARD_BODY },
     { heading: "Downloads", documents: [{ name: "BM Message - Latest (PDF)", type: "pdf" }] },
   ],
 }

@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { FileText, TrendingUp, Megaphone, BarChart3, Laptop, FileSpreadsheet, Search, BookOpen, Trophy } from "lucide-react"
 import { PageHeader } from "@/components/shared/page-header"
@@ -25,7 +26,9 @@ export const metadata: Metadata = {
 export default function AgentSupportPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={agentSupportLanding.title} description={agentSupportLanding.description} />
+      <PageHeader title={agentSupportLanding.title} description={agentSupportLanding.description} 
+        breadcrumbs={getBreadcrumbs("/agent-support")}
+      />
       <div className="mt-8">
         <ContentSection sections={agentSupportLanding.sections} itemIcons={itemIcons} />
       </div>

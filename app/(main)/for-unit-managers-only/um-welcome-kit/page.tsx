@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { Check } from "lucide-react"
 import { PageHeader } from "@/components/shared/page-header"
@@ -14,12 +15,14 @@ export const metadata: Metadata = {
 export default function UmWelcomeKitPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={umWelcomeKit.title} description={umWelcomeKit.subtitle} />
+      <PageHeader title={umWelcomeKit.title} description={umWelcomeKit.subtitle} 
+        breadcrumbs={getBreadcrumbs("/for-unit-managers-only/um-welcome-kit")}
+      />
       <div className="mt-10 space-y-12">
         {umWelcomeKit.categories.map((category) => (
           <section key={category.heading}>
             <div className="mb-4 flex items-center gap-3">
-              <h2 className="text-2xl font-bold">{category.heading}</h2>
+              <h2 className="text-xl sm:text-2xl font-bold">{category.heading}</h2>
               <Badge variant="secondary" className="text-xs">{category.tag}</Badge>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

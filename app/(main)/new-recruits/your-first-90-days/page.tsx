@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -16,6 +17,8 @@ export default function YourFirst90DaysPage() {
       <PageHeader
         title={yourFirst90Days.title}
         description={yourFirst90Days.description}
+      
+        breadcrumbs={getBreadcrumbs("/new-recruits/your-first-90-days")}
       />
       <div className="mt-8">
         <ContentSection sections={yourFirst90Days.sections} />

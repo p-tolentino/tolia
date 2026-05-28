@@ -1,3 +1,4 @@
+import { getBreadcrumbs } from "@/lib/navigation"
 import type { Metadata } from "next"
 import { PageHeader } from "@/components/shared/page-header"
 import { ContentSection } from "@/components/shared/content-section"
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function AskMeAnythingPage() {
   return (
     <SectionWrapper>
-      <PageHeader title={amaContent.title} description={amaContent.description} />
+      <PageHeader title={amaContent.title} description={amaContent.description} 
+        breadcrumbs={getBreadcrumbs("/from-bms-desk/ask-me-anything")}
+      />
       <div className="mt-8">
         <ContentSection sections={amaContent.sections} />
       </div>

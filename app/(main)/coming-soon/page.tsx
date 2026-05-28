@@ -19,7 +19,7 @@ export default function ComingSoonPage() {
         This page is under construction. Resources and content are being prepared.
         Please check back later.
       </p>
-      <div className="mt-8 flex gap-4">
+      <div className="mt-8 flex flex-col sm:flex-row gap-4">
         <Button asChild>
           <Link href="/">Back to Home</Link>
         </Button>

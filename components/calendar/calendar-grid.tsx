@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { getCalendarMonth, addMonths, subMonths, format } from "@/lib/calendar-utils"
+import { getCalendarMonth, addMonths, subMonths } from "@/lib/calendar-utils"
 import { CalendarDay } from "./calendar-day"
 import { EventDetail } from "./event-detail"
 import { EventModal } from "./event-modal"
