@@ -1,0 +1,11 @@
+-- Seed data for agents table
+-- Populate with your existing agency roster
+-- Use agent_code as the primary identifier for login lookups
+-- id (UUID) is omitted — it gets linked on first Google OAuth login via auth/callback
+
+-- Example:
+-- INSERT INTO public.agents (agent_code, first_name, middle_name, last_name, email, phone, role, unit)
+-- VALUES
+--   ('2024-0001', 'Juan', 'Santos', 'Dela Cruz', 'juan.delacruz@pru.com', '09171234567', 'Unit Manager', 'Alpha'),
+--   ('2024-0002', 'Maria', '', 'Santos', 'maria.santos@pru.com', '09179876543', 'Agent', 'Alpha'),
+--   ('2024-0003', 'Pedro', 'Reyes', 'Gonzales', 'pedro.gonzales@pru.com', '09175551234', 'Associate', 'Bravo');

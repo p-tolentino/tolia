@@ -5,6 +5,7 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Navbar } from "./navbar"
 import { MobileNav } from "./mobile-nav"
+import { UserButton } from "./user-button"
 import Image from "next/image"
 
 export function Header() {
@@ -19,7 +20,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 z-50 w-full border-b transition-all duration-300",
+        "fixed top-0 z-50 w-screen border-b transition-all duration-300",
         scrolled
           ? "bg-background/95 shadow-sm backdrop-blur-md"
           : "bg-background/80 backdrop-blur-md"
@@ -39,6 +40,7 @@ export function Header() {
         <Navbar className="hidden lg:flex" />
 
         <div className="flex items-center gap-1">
+          <UserButton />
           <MobileNav />
         </div>
       </div>

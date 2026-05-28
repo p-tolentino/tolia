@@ -14,8 +14,8 @@ export default function ComingSoonPage() {
       <div className="flex size-16 items-center justify-center rounded-full bg-primary/10 text-primary">
         <Construction className="size-8" />
       </div>
-      <h1 className="mt-6 text-3xl font-bold tracking-tight sm:text-4xl">Coming Soon</h1>
-      <p className="mt-3 max-w-md text-muted-foreground">
+      <h1 className="mt-6 text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">Coming Soon</h1>
+      <p className="mt-3 max-w-md text-sm text-muted-foreground sm:text-base">
         This page is under construction. Resources and content are being prepared.
         Please check back later.
       </p>

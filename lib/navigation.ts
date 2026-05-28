@@ -173,7 +173,13 @@ export const navigationItems: NavItem[] = [
     title: "For UMs Only",
     href: "/for-unit-managers-only",
     icon: "Shield",
+    umOnly: true,
     children: [
+      {
+        title: "UM Welcome Kit",
+        href: "/for-unit-managers-only/um-welcome-kit",
+        description: "Premium starter package for new Unit Managers",
+      },
       {
         title: "Unit Business Plan",
         href: "/for-unit-managers-only/unit-business-plan",
@@ -213,11 +219,6 @@ export const navigationItems: NavItem[] = [
         title: "Agents Directory",
         href: "/for-unit-managers-only/agents-directory",
         description: "Complete directory of TOLIA agents",
-      },
-      {
-        title: "UM Welcome Kit",
-        href: "/for-unit-managers-only/um-welcome-kit",
-        description: "Premium starter package for new Unit Managers",
       },
     ],
   },

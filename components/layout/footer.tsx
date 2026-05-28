@@ -1,16 +1,41 @@
 import Link from "next/link"
+import Image from "next/image"
+import { createClient } from "@/lib/supabase/server"
+import { isUmRole } from "@/lib/auth/roles"
 import { navigationItems } from "@/lib/navigation"
 
-export function Footer() {
+export async function Footer() {
+  let isUm = false
+  try {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (user) {
+      const { data: agent } = await supabase
+        .from("agents")
+        .select("role")
+        .eq("id", user.id)
+        .single()
+      if (agent) isUm = isUmRole(agent.role)
+    }
+  } catch {}
+
+  const visibleItems = navigationItems.filter((item) => {
+    if (item.umOnly && !isUm) return false
+    if (item.children?.some((c) => c.umOnly && !isUm)) return false
+    return true
+  })
+
   return (
     <footer className="border-t bg-muted/50">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <img
+            <Image
               src="/tolia-full.png"
               alt="TOLIA"
               className="mb-3 h-10 w-auto"
+              height={1000}
+              width={1000}
             />
             <p className="text-sm text-muted-foreground">
               Tolentino Life Insurance Agency (TOLIA)
@@ -20,7 +45,7 @@ export function Footer() {
           <div>
             <h4 className="mb-3 text-sm font-semibold">Quick Links</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              {navigationItems.map((item) => (
+              {visibleItems.map((item) => (
                 <li key={item.title}>
                   <Link
                     href={item.href || "#"}

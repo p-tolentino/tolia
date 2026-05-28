@@ -30,9 +30,9 @@ export function PageHeader({ title, description, breadcrumbs, className }: PageH
           </ol>
         </nav>
       )}
-      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{title}</h1>
+      <h1 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">{title}</h1>
       {description && (
-        <p className="mt-2 max-w-2xl text-lg text-muted-foreground">{description}</p>
+        <p className="mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base lg:text-lg">{description}</p>
       )}
     </div>
   )

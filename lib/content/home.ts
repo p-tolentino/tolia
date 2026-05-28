@@ -1,6 +1,4 @@
-import type { PageContent } from "../types"
-
-export const homeContent: PageContent = {
+export const homeContent = {
   title: "TOLIA (Tolentino Life Insurance Agency) — Pru Life UK",
   description:
     "Empowering agents with the tools, training, and support to succeed.",
@@ -23,11 +21,7 @@ export const homeContent: PageContent = {
           href: "/from-bms-desk",
           description: "Updates and announcements from the BM",
         },
-        {
-          label: "For UMs Only",
-          href: "/for-unit-managers-only",
-          description: "Exclusive UM resources and tools",
-        },
+
         {
           label: "LEAP",
           href: "/leap",
@@ -42,6 +36,12 @@ export const homeContent: PageContent = {
           label: "Socials",
           href: "/socials",
           description: "Events, greetings, and community",
+        },
+        {
+          label: "For UMs Only",
+          href: "/for-unit-managers-only",
+          description: "Exclusive UM resources and tools",
+          umOnly: true,
         },
       ],
     },

@@ -32,7 +32,7 @@ export function TabbedContent({ tabs, defaultValue }: TabbedContentProps) {
       </TabsList>
       {tabs.map((tab) => (
         <TabsContent key={tab.label} value={tab.label} className="mt-4 space-y-4">
-          {tab.section.body && <p className="text-muted-foreground">{tab.section.body}</p>}
+          {tab.section.body && <p className="text-sm text-muted-foreground sm:text-base">{tab.section.body}</p>}
           {tab.section.documents && tab.section.documents.length > 0 && (
             <div className="space-y-2">
               {tab.section.documents.map((doc) => {

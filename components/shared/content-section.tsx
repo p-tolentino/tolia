@@ -24,8 +24,8 @@ export function ContentSection({ sections, itemIcons }: ContentSectionProps) {
     <div className="space-y-6">
       {sections.map((section) => (
         <div key={section.heading}>
-          <h2 className="text-xl font-semibold">{section.heading}</h2>
-          {section.body && <p className="mt-2 text-muted-foreground">{section.body}</p>}
+          <h2 className="text-lg font-semibold sm:text-xl">{section.heading}</h2>
+          {section.body && <p className="mt-2 text-sm text-muted-foreground sm:text-base">{section.body}</p>}
           {section.items && (
             <div className="mt-4">
               <CardGrid columns={2}>

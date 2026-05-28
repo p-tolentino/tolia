@@ -19,6 +19,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { SectionWrapper } from "@/components/shared/section-wrapper"
+import { createClient } from "@/lib/supabase/server"
+import { isUmRole } from "@/lib/auth/roles"
 import { homeContent, heroContent } from "@/lib/content/home"
 
 export const metadata: Metadata = {
@@ -42,18 +44,35 @@ const sectionIcons: Record<
   Socials: Share2,
 }
 
-export default function HomePage() {
-  const quickLinks = homeContent.sections[0]?.items ?? []
+export default async function HomePage() {
+  let isUm = false
+  try {
+    const supabase = await createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    if (user) {
+      const { data: agent } = await supabase
+        .from("agents")
+        .select("role")
+        .eq("id", user.id)
+        .single()
+      if (agent) isUm = isUmRole(agent.role)
+    }
+  } catch {}
+
+  const quickLinks = (homeContent.sections[0]?.items ?? []).filter(
+    (item) => !("umOnly" in item && item.umOnly && !isUm)
+  )
   return (
     <>
       <section className="relative overflow-hidden bg-linear-to-br from-primary/65 to-primary">
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-          <div className="max-w-2xl">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="">
             <h1 className="text-4xl font-bold tracking-tight text-primary-foreground sm:text-5xl lg:text-6xl">
-              Welcome to <br />
-              TOLIA Web Suite
+              Welcome to TOLIA Web Suite
             </h1>
-            <p className="mt-4 text-lg text-primary-foreground/80 sm:text-xl">
+            <p className="mt-2 text-lg text-primary-foreground/80 sm:text-xl">
               Empowering agents to succeed.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">

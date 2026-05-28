@@ -5,6 +5,7 @@ export interface NavSubItem {
   icon?: string
   isExternal?: boolean
   badge?: string
+  umOnly?: boolean
 }
 
 export interface NavItem {
@@ -13,6 +14,7 @@ export interface NavItem {
   icon?: string
   children?: NavSubItem[]
   isExternal?: boolean
+  umOnly?: boolean
 }
 
 export interface ResourceItem {
