@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { useAuth } from "@/components/auth/auth-provider"
 import { signOut } from "@/app/actions/auth"
 import { Button } from "@/components/ui/button"
@@ -13,13 +14,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { LogOut } from "lucide-react"
+import { toast } from "sonner"
 
 export function UserButton() {
+  const router = useRouter()
   const { user, agent, loading } = useAuth()
 
   if (loading || !user || !agent) return null
 
   const initials = `${agent.first_name[0]}${agent.last_name[0]}`.toUpperCase()
+
+  async function handleSignOut() {
+    const result = await signOut()
+    if (result?.success) {
+      toast.success("Signed out successfully")
+      router.push("/login")
+      router.refresh()
+    }
+  }
 
   return (
     <DropdownMenu>
@@ -48,7 +60,7 @@ export function UserButton() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>
+        <DropdownMenuItem onClick={handleSignOut}>
           <LogOut className="mr-2 size-4" />
           Sign out
         </DropdownMenuItem>

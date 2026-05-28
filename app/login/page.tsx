@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense, useState, useEffect } from "react"
+import { Suspense, useState, useEffect, useRef } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import {
   signInWithGoogle,
@@ -15,20 +15,40 @@ import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
 
 function LoginForm() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
   const [showFirstTime, setShowFirstTime] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
 
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const toastShownRef = useRef(false)
+
+  const errorParam = searchParams.get("error")
+  const errorMessage =
+    errorParam === "no_agent_found"
+      ? "No agent data found for this Google account. If you believe this is a mistake, please contact the branch manager for assistance."
+      : null
+
   useEffect(() => {
-    if (searchParams.get("error") === "no_agent_found") {
-      const msg =
-        "No agent data found for this Google account. If you believe this is a mistake, please contact the branch manager for assistance."
-      setError(msg)
-      toast.error(msg)
+    if (errorParam === "no_agent_found" && !toastShownRef.current) {
+      toast.error(errorMessage)
+      toastShownRef.current = true
     }
-  }, [searchParams])
+    // Reset the ref if the param changes to something else
+    if (errorParam !== "no_agent_found") {
+      toastShownRef.current = false
+    }
+  }, [errorParam, errorMessage])
+
+  function loginErrorMessage(code: string): string {
+    if (code === "no_account") {
+      return "No account found for this agent code. Please set up your password using the link below."
+    }
+    if (code === "wrong_password") {
+      return "Incorrect password. If you forgot it, reset your password using the link below."
+    }
+    return code
+  }
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -37,8 +57,9 @@ function LoginForm() {
     const form = new FormData(event.currentTarget)
     const result = await signInWithAgentCode(form)
     if (result?.error) {
-      setError(result.error)
-      toast.error(result.error)
+      const msg = loginErrorMessage(result.error)
+      setError(msg)
+      toast.error(msg)
     }
     if (result?.success) {
       toast.success("Signed in successfully")
@@ -77,7 +98,7 @@ function LoginForm() {
           <h1 className="mt-4 text-lg font-semibold sm:text-xl">Sign in</h1>
           <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
             {showFirstTime
-              ? "Enter your agent code to receive a password setup link."
+              ? "Enter your agent code to receive a password setup or reset link."
               : "Sign in with your Google account or agent credentials."}
           </p>
         </div>
@@ -179,7 +200,6 @@ function LoginForm() {
             </>
           ) : (
             <>
-              First time?{" "}
               <button
                 type="button"
                 onClick={() => {
@@ -187,9 +207,12 @@ function LoginForm() {
                   setError(null)
                   setSuccess(null)
                 }}
-                className="font-medium text-primary underline-offset-4 hover:underline"
+                className="text-muted-foreground underline-offset-4"
               >
-                Set up your password
+                Trouble signing in?{" "}
+                <span className="font-medium text-primary hover:cursor-pointer hover:underline">
+                  Set up or reset your password
+                </span>
               </button>
             </>
           )}

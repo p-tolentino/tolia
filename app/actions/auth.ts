@@ -3,7 +3,6 @@
 import { createClient as createServerClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
 
 export async function signInWithGoogle() {
   const supabase = await createServerClient()
@@ -41,6 +40,13 @@ export async function signInWithAgentCode(formData: FormData) {
     }
   }
 
+  const { data: users } = await admin.auth.admin.listUsers()
+  const existingUser = users?.users.find((u) => u.email === agent.email)
+
+  if (!existingUser) {
+    return { error: "no_account" }
+  }
+
   const { error } = await supabase.auth.signInWithPassword({
     email: agent.email,
     password,
@@ -48,10 +54,7 @@ export async function signInWithAgentCode(formData: FormData) {
 
   if (error) {
     if (error.message === "Invalid login credentials") {
-      return {
-        error:
-          "Incorrect password. Try again or use 'First time?' to set up your account.",
-      }
+      return { error: "wrong_password" }
     }
     return { error: error.message }
   }
@@ -98,7 +101,7 @@ export async function signOut() {
   const supabase = await createServerClient()
   await supabase.auth.signOut()
   revalidatePath("/")
-  redirect("/login")
+  return { success: true }
 }
 
 export async function getCurrentUser() {
@@ -157,8 +160,14 @@ export async function requestPasswordSetup(formData: FormData) {
     )
 
     if (createError) {
-      if (createError.message?.toLowerCase().includes("rate_limit") || createError.message?.toLowerCase().includes("rate limit")) {
-        return { error: "You've requested too many emails recently. For security purposes, please try again in an hour." }
+      if (
+        createError.message?.toLowerCase().includes("rate_limit") ||
+        createError.message?.toLowerCase().includes("rate limit")
+      ) {
+        return {
+          error:
+            "You've requested too many emails recently. For security purposes, please try again in an hour.",
+        }
       }
       return { error: createError.message }
     }
@@ -172,8 +181,14 @@ export async function requestPasswordSetup(formData: FormData) {
     )
 
     if (resetError) {
-      if (resetError.message?.toLowerCase().includes("rate_limit") || resetError.message?.toLowerCase().includes("rate limit")) {
-        return { error: "You've requested too many password reset emails recently. For security purposes, please try again in an hour." }
+      if (
+        resetError.message?.toLowerCase().includes("rate_limit") ||
+        resetError.message?.toLowerCase().includes("rate limit")
+      ) {
+        return {
+          error:
+            "You've requested too many password reset emails recently. For security purposes, please try again in an hour.",
+        }
       }
       return { error: resetError.message }
     }
