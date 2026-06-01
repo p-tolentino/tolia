@@ -1,47 +1,31 @@
-import { createServerClient } from "@supabase/ssr"
 import { createAdminClient } from "@/lib/supabase/admin"
-import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { createClient } from "@/lib/supabase/server"
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
-  const tokenHash = searchParams.get("token_hash")
+  const token_hash = searchParams.get("token_hash")
   const type = searchParams.get("type")
   const next = searchParams.get("next") ?? "/auth/update-password"
 
-  if (tokenHash && type) {
-    const cookieStore = await cookies()
-
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll: async () => cookieStore.getAll(),
-          setAll: async (cookiesToSet) => {
-            try {
-              cookiesToSet.forEach(({ name, value, options }) => {
-                cookieStore.set(name, value, options)
-              })
-            } catch {
-              // ignore
-            }
-          },
-        },
-      },
-    )
+  if (token_hash && type) {
+    const supabase = await createClient()
 
     const { error } = await supabase.auth.verifyOtp({
-      token_hash: tokenHash,
+      token_hash,
       type,
     })
 
     if (!error) {
       // Link agent identity
-      const { data: { user } } = await supabase.auth.getUser()
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+
       if (user?.email) {
         const admin = createAdminClient()
+
         const { data: agent } = await admin
           .from("agents")
           .select("id")

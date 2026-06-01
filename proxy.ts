@@ -36,7 +36,6 @@ export async function proxy(request: NextRequest) {
     if (
       pathname.startsWith("/login") ||
       pathname.startsWith("/auth/callback") ||
-      pathname.startsWith("/auth/update-password") ||
       pathname.startsWith("/auth/confirm")
     ) {
       if (user) {

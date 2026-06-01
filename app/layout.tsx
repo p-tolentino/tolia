@@ -14,7 +14,8 @@ const fontMono = Geist_Mono({
   variable: "--font-mono",
 })
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tolia-pru.ph"
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://pru-tolia.vercel.app"
 
 export const metadata: Metadata = {
   title: {
@@ -83,7 +84,7 @@ export default function RootLayout({
         <ThemeProvider>
           <AuthProvider>
             {children}
-            <Toaster />
+            <Toaster richColors />
           </AuthProvider>
         </ThemeProvider>
       </body>
