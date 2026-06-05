@@ -17,7 +17,7 @@ export default function AskMeAnythingPage() {
         breadcrumbs={getBreadcrumbs("/from-bms-desk/ask-me-anything")}
       />
       <div className="mt-8">
-        <ContentSection sections={amaContent.sections} />
+        <ContentSection sections={amaContent.sections} routePath="/from-bms-desk/ask-me-anything" />
       </div>
     </SectionWrapper>
   )

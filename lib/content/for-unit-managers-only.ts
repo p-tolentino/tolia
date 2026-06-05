@@ -64,13 +64,6 @@ export const unitBusinessPlan: PageContent = {
   description: "Develop, track, and manage your unit business plan.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [
-        { name: "Business Plan Template (XLS)", type: "xls" },
-        { name: "Business Plan Guide (PDF)", type: "pdf" },
-      ],
-    },
   ],
 }
 
@@ -79,14 +72,6 @@ export const onboardingMaterials: PageContent = {
   description: "Onboarding materials for new agents joining your unit.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [
-        { name: "Onboarding Kit (PDF)", type: "pdf" },
-        { name: "Welcome Letter Template (DOC)", type: "doc" },
-        { name: "Training Calendar Template (XLS)", type: "xls" },
-      ],
-    },
   ],
 }
 
@@ -95,13 +80,6 @@ export const oneOnOneEngagement: PageContent = {
   description: "Tools and templates for one-on-one coaching sessions.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [
-        { name: "Coaching Session Template (PDF)", type: "pdf" },
-        { name: "Engagement Tracker (XLS)", type: "xls" },
-      ],
-    },
   ],
 }
 
@@ -110,13 +88,6 @@ export const promotionParameters: PageContent = {
   description: "Promotion criteria, parameters, and guidelines.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [
-        { name: "Promotion Criteria (PDF)", type: "pdf" },
-        { name: "Promotion Checklist (PDF)", type: "pdf" },
-      ],
-    },
   ],
 }
 
@@ -125,10 +96,6 @@ export const tappMaterials: PageContent = {
   description: "TAPP program materials, guides, and resources.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [{ name: "TAPP Program Guide (PDF)", type: "pdf" }],
-    },
   ],
 }
 
@@ -137,13 +104,6 @@ export const minutesOfTheMeeting: PageContent = {
   description: "Meeting minutes templates and archives.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [
-        { name: "Meeting Minutes Template (DOC)", type: "doc" },
-        { name: "Meeting Minutes Archive (PDF)", type: "pdf" },
-      ],
-    },
   ],
 }
 

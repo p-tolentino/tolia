@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge"
 import { Clock, MapPin, CalendarDays, Repeat, Paperclip, ExternalLink } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
+import { getTypeConfig } from "@/lib/calendar-colors"
 import { formatTimeForCell } from "@/lib/calendar-utils"
 import type { CalendarEvent } from "@/lib/types"
 
@@ -20,25 +21,17 @@ interface EventModalProps {
   onOpenChange: (open: boolean) => void
 }
 
-const eventTypeLabels: Record<string, { label: string; color: string }> = {
-  training: { label: "Training", color: "bg-blue-500" },
-  meeting: { label: "Meeting", color: "bg-green-500" },
-  deadline: { label: "Deadline", color: "bg-red-500" },
-  social: { label: "Social", color: "bg-purple-500" },
-  exam: { label: "Exam", color: "bg-amber-500" },
-}
-
 export function EventModal({ event, open, onOpenChange }: EventModalProps) {
   if (!event) return null
 
-  const typeInfo = eventTypeLabels[event.eventType] ?? { label: event.eventType, color: "bg-gray-500" }
+  const typeInfo = getTypeConfig(event.eventType)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <div className="flex items-center gap-2">
-            <span className={cn("size-2.5 rounded-full", typeInfo.color)} />
+            <span className={cn("size-2.5 rounded-full", typeInfo.dot)} />
             <Badge variant="outline" className="text-[10px]">{typeInfo.label}</Badge>
           </div>
           <DialogTitle className="mt-2 text-xl">{event.title}</DialogTitle>
@@ -63,7 +56,12 @@ export function EventModal({ event, open, onOpenChange }: EventModalProps) {
             </div>
           )}
 
-          {(event.time || event.startTime) && (
+          {event.allDay ? (
+            <div className="flex items-center gap-3 text-sm text-muted-foreground">
+              <Clock className="size-4 shrink-0" />
+              <span>All Day</span>
+            </div>
+          ) : (event.time || event.startTime) && (
             <div className="flex items-center gap-3 text-sm text-muted-foreground">
               <Clock className="size-4 shrink-0" />
               <span>{event.time || `${formatTimeForCell(event.startTime)}${event.endTime ? ` - ${formatTimeForCell(event.endTime)}` : ""}`}</span>

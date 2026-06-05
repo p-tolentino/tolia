@@ -8,6 +8,7 @@ import { getAgentProfile } from "@/app/actions/agents"
 interface Agent {
   agent_code: string
   first_name: string
+  middle_name: string
   last_name: string
   avatar_url: string | null
   role: string

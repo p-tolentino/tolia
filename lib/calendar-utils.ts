@@ -99,7 +99,8 @@ export function formatTimeForCell(time: string | undefined): string {
   if (match12h) return match12h[1]
   const match24h = time.match(/^(\d+):(\d+)$/)
   if (match24h) {
-    const [h, m] = match24h[1].split(":").map(Number)
+    const h = parseInt(match24h[1])
+    const m = match24h[2]
     const ampm = h >= 12 ? "PM" : "AM"
     const hour12 = h % 12 || 12
     return `${hour12}:${m.toString().padStart(2, "0")} ${ampm}`

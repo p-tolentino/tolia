@@ -17,7 +17,7 @@ export default function ProtectionDrivePage() {
         breadcrumbs={getBreadcrumbs("/rewards-and-incentives/trackers/protection-drive")}
       />
       <div className="mt-8">
-        <ContentSection sections={protectionDrive.sections} />
+        <ContentSection sections={protectionDrive.sections} routePath="/rewards-and-incentives/trackers/protection-drive" />
       </div>
     </SectionWrapper>
   )

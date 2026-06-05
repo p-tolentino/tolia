@@ -17,7 +17,7 @@ export default function AnnouncementsPage() {
         breadcrumbs={getBreadcrumbs("/from-bms-desk/announcements")}
       />
       <div className="mt-8">
-        <ContentSection sections={announcements.sections} />
+        <ContentSection sections={announcements.sections} routePath="/from-bms-desk/announcements" />
       </div>
     </SectionWrapper>
   )

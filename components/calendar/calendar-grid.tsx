@@ -3,6 +3,13 @@
 import { useState, useMemo } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { cn } from "@/lib/utils"
 import { getCalendarMonth, addMonths, subMonths } from "@/lib/calendar-utils"
 import type { CalendarDayData } from "@/lib/calendar-utils"
@@ -119,31 +126,43 @@ export function CalendarGrid({ events }: CalendarGridProps) {
             <ChevronLeft className="size-4" />
           </Button>
 
-          <select
-            value={currentDate.getMonth()}
-            onChange={(e) => handleMonthChange(parseInt(e.target.value))}
-            className="h-9 rounded-md border bg-background px-2 text-sm font-medium focus:ring-2 focus:ring-ring focus:outline-none"
-            aria-label="Select month"
+          <Select
+            value={String(currentDate.getMonth())}
+            onValueChange={(value) => handleMonthChange(parseInt(value))}
           >
-            {MONTHS.map((name, i) => (
-              <option key={name} value={i}>
-                {name}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger
+              className="h-9 min-w-32 px-2 font-medium"
+              aria-label="Select month"
+            >
+              <SelectValue placeholder="Month" />
+            </SelectTrigger>
+            <SelectContent align="start" position="popper" className="min-w-32">
+              {MONTHS.map((name, i) => (
+                <SelectItem key={name} value={String(i)}>
+                  {name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-          <select
-            value={currentDate.getFullYear()}
-            onChange={(e) => handleYearChange(parseInt(e.target.value))}
-            className="h-9 rounded-md border bg-background px-2 text-sm font-medium focus:ring-2 focus:ring-ring focus:outline-none"
-            aria-label="Select year"
+          <Select
+            value={String(currentDate.getFullYear())}
+            onValueChange={(value) => handleYearChange(parseInt(value))}
           >
-            {yearRange.map((y) => (
-              <option key={y} value={y}>
-                {y}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger
+              className="h-9 min-w-32 px-2 font-medium"
+              aria-label="Select year"
+            >
+              <SelectValue placeholder="Year" />
+            </SelectTrigger>
+            <SelectContent position="popper" className="min-w-32">
+              {yearRange.map((y) => (
+                <SelectItem key={y} value={String(y)}>
+                  {y}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
           <Button
             variant="outline"
@@ -159,8 +178,8 @@ export function CalendarGrid({ events }: CalendarGridProps) {
         </Button>
       </div>
 
-      <div className="overflow-hidden rounded-lg border bg-card">
-        <div className="grid grid-cols-7 border-b">
+      <div className="overflow-hidden rounded-lg bg-card">
+        <div className="grid grid-cols-7 rounded-t-lg border-x border-y">
           {WEEKDAYS.map((day) => (
             <div
               key={day}
@@ -172,8 +191,8 @@ export function CalendarGrid({ events }: CalendarGridProps) {
           ))}
         </div>
         {weeks.map((week, wi) => (
-          <div key={wi} className={cn(wi > 0 && "border-t border-border")}>
-            <div className="grid grid-cols-7 gap-px bg-border">
+          <div key={wi} className={cn(wi > 0 && "z-10 border-t border-border")}>
+            <div className="grid grid-cols-7 gap-0.5 bg-border px-0.5 pb-0.5">
               {week.map((day) => {
                 const isDaySelected =
                   selectedDate.getFullYear() === day.date.getFullYear() &&
@@ -183,12 +202,12 @@ export function CalendarGrid({ events }: CalendarGridProps) {
                   <div
                     key={day.date.toISOString()}
                     className={cn(
-                      "h-24 rounded-lg bg-card p-px transition-all sm:h-32 sm:p-0.5 cursor-pointer hover:bg-accent",
+                      "h-24 cursor-pointer rounded-lg bg-card p-px transition-all hover:bg-accent sm:h-32 sm:p-0.5",
                       day.isToday &&
                         !isDaySelected &&
-                        "relative z-10 ring-2 ring-primary",
+                        "relative z-10 ring-1 ring-primary",
                       isDaySelected &&
-                        "relative z-10 bg-accent ring-1 ring-primary"
+                        "relative z-10 bg-accent ring-2 ring-primary"
                     )}
                     onClick={() => setSelectedDate(day.date)}
                   >

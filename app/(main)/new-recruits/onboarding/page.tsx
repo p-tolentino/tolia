@@ -20,7 +20,7 @@ export default function OnboardingPage() {
         breadcrumbs={getBreadcrumbs("/new-recruits/onboarding")}
       />
       <div className="mt-8">
-        <ContentSection sections={onboarding.sections} />
+        <ContentSection sections={onboarding.sections} routePath="/new-recruits/onboarding" />
       </div>
     </SectionWrapper>
   )

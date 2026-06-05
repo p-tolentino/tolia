@@ -34,7 +34,7 @@ export default function HomePage() {
                 asChild
               >
                 <Link href={heroContent.cta.href}>
-                  {heroContent.cta.label} <ArrowRight className="ml-2 size-4" />
+                  {heroContent.cta.label} <ArrowRight className="size-4" />
                 </Link>
               </Button>
               <Button
@@ -52,7 +52,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <SectionWrapper className="bg-muted/30">
+      <SectionWrapper className="bg-muted/30 py-8">
         <QuickAccessCards />
       </SectionWrapper>
     </>

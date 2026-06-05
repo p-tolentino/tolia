@@ -1,48 +1,38 @@
 "use client"
 
-import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form"
 import { updateUserPassword } from "@/app/actions/auth"
 import { toast } from "sonner"
+import { passwordSchema, type PasswordFormValues } from "@/lib/schemas/auth"
 
 export default function UpdatePasswordPage() {
   const router = useRouter()
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setError(null)
-    setLoading(true)
+  const form = useForm<PasswordFormValues>({
+    resolver: zodResolver(passwordSchema),
+    defaultValues: { password: "", confirm: "" },
+  })
 
-    const form = new FormData(event.currentTarget)
-    const password = form.get("password") as string
-    const confirm = form.get("confirm") as string
-
-    if (password !== confirm) {
-      setError("Passwords do not match.")
-      setLoading(false)
-      return
-    }
-
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.")
-      setLoading(false)
-      return
-    }
-
-    const result = await updateUserPassword(password)
-
+  async function onSubmit(values: PasswordFormValues) {
+    const result = await updateUserPassword(values.password)
     if (result.error) {
-      setError(result.error)
-      setLoading(false)
+      form.setError("root", { message: result.error })
       return
     }
-
     toast.success("Password set successfully")
     router.push("/login")
   }
@@ -64,37 +54,54 @@ export default function UpdatePasswordPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="password">New Password</Label>
-            <Input
-              id="password"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
               name="password"
-              type="password"
-              placeholder="At least 6 characters"
-              required
-              minLength={6}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>New Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="At least 6 characters"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="confirm">Confirm Password</Label>
-            <Input
-              id="confirm"
+            <FormField
+              control={form.control}
               name="confirm"
-              type="password"
-              placeholder="Re-enter your password"
-              required
-              minLength={6}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Re-enter your password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+            {form.formState.errors.root?.message && (
+              <p className="text-sm text-destructive">{form.formState.errors.root.message}</p>
+            )}
 
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Saving..." : "Set Password"}
-          </Button>
-        </form>
+            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting && <Spinner className="mr-2 size-4" />}
+              Set Password
+            </Button>
+          </form>
+        </Form>
       </div>
     </div>
   )

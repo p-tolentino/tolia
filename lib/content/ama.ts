@@ -6,6 +6,6 @@ export const amaContent: PageContent = {
   description: "Submit your questions and get answers from the leadership team.",
   sections: [
     { heading: "Ask a Question", body: STANDARD_BODY },
-    { heading: "Previous AMA Sessions", documents: [{ name: "AMA Session Archive (PDF)", type: "pdf" }] },
+    { heading: "Previous AMA Sessions", body: "View recordings and transcripts from past AMA sessions." },
   ],
 }

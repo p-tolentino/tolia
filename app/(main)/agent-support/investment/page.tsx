@@ -17,7 +17,7 @@ export default function InvestmentPage() {
         breadcrumbs={getBreadcrumbs("/agent-support/investment")}
       />
       <div className="mt-8">
-        <ContentSection sections={investment.sections} />
+        <ContentSection sections={investment.sections} routePath="/agent-support/investment" />
       </div>
     </SectionWrapper>
   )

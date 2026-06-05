@@ -15,7 +15,6 @@ export const pruCalendarContent: PageContent = {
 export const calendarEvents: CalendarEvent[] = [
   // ── MAY 2026 ─────────────────────────────────────────
 
-  // Sat May 2 — Branch Assembly (first Saturday recurring)
   {
     id: "ba-may",
     title: "Branch Assembly",
@@ -30,8 +29,6 @@ export const calendarEvents: CalendarEvent[] = [
     rrule: "FREQ=MONTHLY;BYDAY=1SA",
     organizer: "Branch Manager",
   },
-
-  // Mon May 4
   {
     id: "gh-04",
     title: "Green Hour Weekly Training",
@@ -44,8 +41,6 @@ export const calendarEvents: CalendarEvent[] = [
     recurringPattern: "Every Monday",
     rrule: "FREQ=WEEKLY;BYDAY=MO",
   },
-
-  // Mon May 11
   {
     id: "gh-11",
     title: "Green Hour Weekly Training",
@@ -58,8 +53,6 @@ export const calendarEvents: CalendarEvent[] = [
     recurringPattern: "Every Monday",
     rrule: "FREQ=WEEKLY;BYDAY=MO",
   },
-
-  // Mon May 18 — 3 events
   {
     id: "gh-18",
     title: "Green Hour Weekly Training",
@@ -94,8 +87,6 @@ export const calendarEvents: CalendarEvent[] = [
     description:
       "All pending policy submissions must be encoded by end of day.",
   },
-
-  // Tue May 19 — 2 events
   {
     id: "coach-19",
     title: "One-on-One Coaching Session",
@@ -116,8 +107,6 @@ export const calendarEvents: CalendarEvent[] = [
     eventType: "deadline",
     description: "Submit May content cards for approval.",
   },
-
-  // Wed May 20 — 3 events
   {
     id: "bmm-20",
     title: "Branch Managers Meeting",
@@ -153,8 +142,6 @@ export const calendarEvents: CalendarEvent[] = [
     description: "Celebrating May-born team members!",
     organizer: "Social Committee",
   },
-
-  // Thu May 21
   {
     id: "leadership-21",
     title: "Leadership Workshop",
@@ -165,13 +152,7 @@ export const calendarEvents: CalendarEvent[] = [
     location: "Training Center",
     eventType: "training",
     description: "Situational leadership and team motivation techniques.",
-    attachments: [
-      { name: "Workshop Slides", url: "#", type: "pdf" },
-      { name: "Handout", url: "#", type: "pdf" },
-    ],
   },
-
-  // Fri May 22 — 2 events
   {
     id: "byb-22",
     title: "BYB Session",
@@ -193,8 +174,6 @@ export const calendarEvents: CalendarEvent[] = [
     location: "Café TOLIA",
     eventType: "social",
   },
-
-  // Mon May 25 — 3 events
   {
     id: "licensing-25",
     title: "Licensing Exam",
@@ -230,8 +209,6 @@ export const calendarEvents: CalendarEvent[] = [
     eventType: "meeting",
     organizer: "Unit Manager",
   },
-
-  // Wed May 27
   {
     id: "claims-27",
     title: "Claims Processing Seminar",
@@ -243,8 +220,6 @@ export const calendarEvents: CalendarEvent[] = [
     eventType: "training",
     description: "Updates on claims processing workflow and documentation.",
   },
-
-  // Thu May 28 — 2 events
   {
     id: "recruit-28",
     title: "Recruitment Strategy Huddle",
@@ -264,8 +239,6 @@ export const calendarEvents: CalendarEvent[] = [
     eventType: "meeting",
     description: "Track MDRT qualification progress and address gaps.",
   },
-
-  // Fri May 29 (Today) — 2 events
   {
     id: "huddle-29",
     title: "Weekend Kickoff Huddle",
@@ -286,8 +259,6 @@ export const calendarEvents: CalendarEvent[] = [
     allDay: true,
     description: "Complete PRU Life UK Module 3: Needs Analysis.",
   },
-
-  // Sat May 30 — 2 events
   {
     id: "incentive-30",
     title: "Company Incentive Deadline",
@@ -313,7 +284,6 @@ export const calendarEvents: CalendarEvent[] = [
 
   // ── JUNE 2026 ─────────────────────────────────────────
 
-  // Sat June 6 — Branch Assembly (first Saturday recurring)
   {
     id: "ba-jun",
     title: "Branch Assembly",
@@ -328,8 +298,6 @@ export const calendarEvents: CalendarEvent[] = [
     rrule: "FREQ=MONTHLY;BYDAY=1SA",
     organizer: "Branch Manager",
   },
-
-  // Mon June 1 — 2 events
   {
     id: "pruprime-01",
     title: "Product Training - PruLink Prime",
@@ -340,10 +308,6 @@ export const calendarEvents: CalendarEvent[] = [
     eventType: "training",
     description:
       "In-depth product training on the new PruLink Prime investment-linked plan.",
-    attachments: [
-      { name: "PruLink Prime Brochure", url: "#", type: "pdf" },
-      { name: "Product Illustrations", url: "#", type: "doc" },
-    ],
   },
   {
     id: "gh-01",
@@ -357,8 +321,6 @@ export const calendarEvents: CalendarEvent[] = [
     recurringPattern: "Every Monday",
     rrule: "FREQ=WEEKLY;BYDAY=MO",
   },
-
-  // Wed June 3 — 2 events
   {
     id: "bmm-03",
     title: "Branch Managers Meeting",
@@ -379,8 +341,6 @@ export const calendarEvents: CalendarEvent[] = [
     location: "Training Room A",
     eventType: "training",
   },
-
-  // Mon-Fri June 1-5 — MULTI-DAY: Recruitment Week
   {
     id: "recruit-week",
     title: "Recruitment Week Campaign",
@@ -392,8 +352,6 @@ export const calendarEvents: CalendarEvent[] = [
       "Branch-wide recruitment drive. All agents encouraged to invite prospects. Prizes for top referrer.",
     organizer: "Branch Manager",
   },
-
-  // Fri June 5 — 2 events (overlaps with Recruitment Week)
   {
     id: "teambuild-05",
     title: "Team Building Activity",
@@ -415,8 +373,6 @@ export const calendarEvents: CalendarEvent[] = [
     location: "TOLIA Branch Office",
     eventType: "exam",
   },
-
-  // Mon June 8 — 3 events
   {
     id: "gh-08",
     title: "Green Hour Weekly Training",
@@ -448,8 +404,6 @@ export const calendarEvents: CalendarEvent[] = [
     eventType: "deadline",
     description: "Submit Q2 performance reports to the branch office.",
   },
-
-  // Mon-Wed June 8-10 — MULTI-DAY: Mid-Year Planning
   {
     id: "midyear-plan",
     title: "Mid-Year Planning Workshop",
@@ -463,13 +417,7 @@ export const calendarEvents: CalendarEvent[] = [
     description:
       "Three-day strategic planning workshop for all unit managers and branch leaders. Hotel accommodation provided.",
     organizer: "Branch Manager",
-    attachments: [
-      { name: "Planning Agenda", url: "#", type: "pdf" },
-      { name: "Hotel Info", url: "#", type: "link" },
-    ],
   },
-
-  // Thu June 11
   {
     id: "prospect-11",
     title: "Prospecting Workshop",
@@ -482,8 +430,6 @@ export const calendarEvents: CalendarEvent[] = [
     description:
       "Effective prospecting techniques and lead generation strategies.",
   },
-
-  // Fri June 12 — 2 events
   {
     id: "bootcamp-12",
     title: "Recruiting Bootcamp",
@@ -495,7 +441,6 @@ export const calendarEvents: CalendarEvent[] = [
     eventType: "training",
     description:
       "Intensive recruiting skills bootcamp. Role-playing and objection handling.",
-    attachments: [{ name: "Bootcamp Workbook", url: "#", type: "pdf" }],
   },
   {
     id: "social-plan-12",
@@ -506,8 +451,6 @@ export const calendarEvents: CalendarEvent[] = [
     time: "2:00 PM - 3:00 PM",
     eventType: "meeting",
   },
-
-  // Mon June 15 — 2 events
   {
     id: "gh-15",
     title: "Green Hour Weekly Training",
@@ -528,8 +471,6 @@ export const calendarEvents: CalendarEvent[] = [
     allDay: true,
     description: "Final submission of MDRT qualification documents.",
   },
-
-  // Wed June 17
   {
     id: "underwriting-17",
     title: "Underwriting Updates",
@@ -540,10 +481,7 @@ export const calendarEvents: CalendarEvent[] = [
     location: "Conference Room",
     eventType: "training",
     description: "Latest underwriting guidelines and frequently asked cases.",
-    attachments: [{ name: "Underwriting Guide v3", url: "#", type: "pdf" }],
   },
-
-  // Fri June 19 — 3 events
   {
     id: "salepush-19",
     title: "Month-End Sales Push",
@@ -578,8 +516,6 @@ export const calendarEvents: CalendarEvent[] = [
     description: "Quarterly awards ceremony recognizing top-performing agents.",
     organizer: "Branch Manager",
   },
-
-  // Mon June 22 — 2 events
   {
     id: "gh-22",
     title: "Green Hour Weekly Training",
@@ -601,13 +537,7 @@ export const calendarEvents: CalendarEvent[] = [
     time: "2:00 PM - 4:00 PM",
     location: "Training Room B",
     eventType: "training",
-    attachments: [
-      { name: "Conversion Checklist", url: "#", type: "pdf" },
-      { name: "Sample Scenarios", url: "#", type: "doc" },
-    ],
   },
-
-  // Thu-Sat June 25-27 — MULTI-DAY: Agency Convention
   {
     id: "convention",
     title: "TOLIA Agency Convention",
@@ -619,14 +549,7 @@ export const calendarEvents: CalendarEvent[] = [
     description:
       "Annual agency convention. All agents required to attend. Bus transportation provided from branch office.",
     organizer: "Branch Manager",
-    attachments: [
-      { name: "Convention Program", url: "#", type: "pdf" },
-      { name: "Hotel Room Assignment", url: "#", type: "doc" },
-      { name: "Transportation Schedule", url: "#", type: "link" },
-    ],
   },
-
-  // Fri June 26 — 2 events (shared with convention multi-day)
   {
     id: "finlit-26",
     title: "Financial Literacy Seminar",
@@ -647,8 +570,6 @@ export const calendarEvents: CalendarEvent[] = [
     location: "Rooftop Lounge",
     eventType: "social",
   },
-
-  // Mon June 29 — 2 events
   {
     id: "gh-29",
     title: "Green Hour Weekly Training",
@@ -672,8 +593,6 @@ export const calendarEvents: CalendarEvent[] = [
     description: "Month-end review of individual and unit performance targets.",
     organizer: "Unit Manager",
   },
-
-  // Tue June 30 — 2 events
   {
     id: "enroll-30",
     title: "Enrollment Deadline - FYI",
@@ -699,7 +618,6 @@ export const calendarEvents: CalendarEvent[] = [
 
   // ── JULY 2026 ─────────────────────────────────────────
 
-  // Sat July 4 — Branch Assembly (first Saturday recurring)
   {
     id: "ba-jul",
     title: "Branch Assembly",
@@ -714,8 +632,6 @@ export const calendarEvents: CalendarEvent[] = [
     rrule: "FREQ=MONTHLY;BYDAY=1SA",
     organizer: "Branch Manager",
   },
-
-  // Mon July 6 — 3 days — MULTI-DAY: Product Bootcamp
   {
     id: "product-bootcamp",
     title: "Product Knowledge Bootcamp",
@@ -729,9 +645,5 @@ export const calendarEvents: CalendarEvent[] = [
     description:
       "Three-day intensive product training covering all Pru Life UK products. Certification required for all agents.",
     organizer: "Training Department",
-    attachments: [
-      { name: "Bootcamp Schedule", url: "#", type: "pdf" },
-      { name: "Pre-Reading Materials", url: "#", type: "pdf" },
-    ],
   },
 ]

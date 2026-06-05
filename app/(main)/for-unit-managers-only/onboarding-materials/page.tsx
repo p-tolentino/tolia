@@ -17,7 +17,7 @@ export default function OnboardingMaterialsPage() {
         breadcrumbs={getBreadcrumbs("/for-unit-managers-only/onboarding-materials")}
       />
       <div className="mt-8">
-        <ContentSection sections={onboardingMaterials.sections} />
+        <ContentSection sections={onboardingMaterials.sections} routePath="/for-unit-managers-only/onboarding-materials" />
       </div>
     </SectionWrapper>
   )

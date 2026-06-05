@@ -7,6 +7,23 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   let supabaseResponse = NextResponse.next({ request })
 
+  const paymentStatus = process.env.PAYMENT_STATUS
+  if (paymentStatus && paymentStatus !== "paid") {
+    const bypassPaths = [
+      "/login",
+      "/auth/callback",
+      "/auth/confirm",
+      "/unauthorized",
+      "/maintenance",
+    ]
+    const isBypass = bypassPaths.some((p) => pathname.startsWith(p))
+    if (!isBypass) {
+      const url = request.nextUrl.clone()
+      url.pathname = "/maintenance"
+      return NextResponse.redirect(url)
+    }
+  }
+
   try {
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,

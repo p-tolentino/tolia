@@ -17,7 +17,7 @@ export default function UnitBusinessPlanPage() {
         breadcrumbs={getBreadcrumbs("/for-unit-managers-only/unit-business-plan")}
       />
       <div className="mt-8">
-        <ContentSection sections={unitBusinessPlan.sections} />
+        <ContentSection sections={unitBusinessPlan.sections} routePath="/for-unit-managers-only/unit-business-plan" />
       </div>
     </SectionWrapper>
   )

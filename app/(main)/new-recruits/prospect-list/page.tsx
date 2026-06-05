@@ -20,7 +20,7 @@ export default function ProspectListPage() {
         breadcrumbs={getBreadcrumbs("/new-recruits/prospect-list")}
       />
       <div className="mt-8">
-        <ContentSection sections={prospectList.sections} />
+        <ContentSection sections={prospectList.sections} routePath="/new-recruits/prospect-list" />
       </div>
     </SectionWrapper>
   )

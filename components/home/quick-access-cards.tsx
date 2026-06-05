@@ -44,38 +44,40 @@ export function QuickAccessCards() {
   const isUm = isUmRole(agent?.role)
 
   const quickLinks = (homeContent.sections[0]?.items ?? []).filter(
-    (item) => !("umOnly" in item && item.umOnly && !isUm),
+    (item) => !("umOnly" in item && item.umOnly && !isUm)
   )
 
   return (
     <>
-      <h2 className="mb-8 text-2xl font-bold tracking-tight sm:text-3xl">
-        Quick Access
-      </h2>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Mobile: Maya/GCash-style 3-col grid */}
+      <div className="grid grid-cols-3 gap-3 space-y-4 sm:hidden">
+        {quickLinks.map((section) => {
+          const Icon = section.label ? sectionIcons[section.label] : null
+          return (
+            <Link
+              key={section.href}
+              href={section.href}
+              className="flex flex-col items-center gap-1.5 text-center"
+            >
+              <div className="flex size-12 items-center justify-center rounded-xl bg-muted text-primary transition-colors hover:bg-muted/70">
+                {Icon && <Icon className="size-6" />}
+              </div>
+              <span className="text-xs leading-tight font-medium text-foreground">
+                {section.label}
+              </span>
+            </Link>
+          )
+        })}
+      </div>
+      {/* Desktop: Card grid */}
+      <div className="hidden gap-6 sm:grid sm:grid-cols-2 lg:grid-cols-3">
         {quickLinks.map((section) => {
           const Icon = section.label ? sectionIcons[section.label] : null
           return (
             <Link key={section.href} href={section.href}>
-              <div className="group flex cursor-pointer items-center gap-3 rounded-lg border bg-card p-3 transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 sm:hidden">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary/20">
-                  <span className="transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
-                    {Icon && <Icon className="size-5" />}
-                  </span>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="truncate text-sm font-medium text-foreground">
-                    {section.label}
-                  </div>
-                  <div className="truncate text-xs text-muted-foreground">
-                    {section.description}
-                  </div>
-                </div>
-                <ArrowRight className="size-4 shrink-0 text-muted-foreground" />
-              </div>
-              <Card className="group hidden h-full cursor-pointer transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 sm:block">
+              <Card className="group h-full cursor-pointer transition-all duration-300 hover:border-primary/50 hover:bg-primary/5">
                 <CardHeader>
-                  <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary/20">
+                  <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-muted text-primary transition-all duration-300 group-hover:bg-muted/70">
                     <span className="transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
                       {Icon && <Icon className="size-5" />}
                     </span>

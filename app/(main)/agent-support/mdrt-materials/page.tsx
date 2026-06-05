@@ -17,7 +17,7 @@ export default function MdrtMaterialsPage() {
         breadcrumbs={getBreadcrumbs("/agent-support/mdrt-materials")}
       />
       <div className="mt-8">
-        <ContentSection sections={mdrtMaterials.sections} />
+        <ContentSection sections={mdrtMaterials.sections} routePath="/agent-support/mdrt-materials" />
       </div>
     </SectionWrapper>
   )

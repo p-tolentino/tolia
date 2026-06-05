@@ -39,7 +39,7 @@ export function Header() {
 
         <Navbar className="hidden 2xl:flex" />
 
-        <div className="flex shrink-0 items-center gap-1">
+        <div className="flex shrink-0 items-center gap-2">
           <UserButton />
           <MobileNav />
         </div>

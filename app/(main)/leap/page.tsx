@@ -17,7 +17,7 @@ export default function LeapPage() {
         breadcrumbs={getBreadcrumbs("/leap")}
       />
       <div className="mt-8">
-        <ContentSection sections={leapContent.sections} />
+        <ContentSection sections={leapContent.sections} routePath="/leap" />
       </div>
     </SectionWrapper>
   )

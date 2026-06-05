@@ -27,7 +27,6 @@ export const productPrimers: PageContent = {
   description: "One-page summaries of all Pru Life UK insurance products.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    { heading: "Downloads", documents: [{ name: "PruLink Prime Pro Primer (PDF)", type: "pdf" }, { name: "PruHealth Complete Primer (PDF)", type: "pdf" }, { name: "PruInvest Primer (PDF)", type: "pdf" }] },
   ],
 }
 
@@ -36,7 +35,6 @@ export const investment: PageContent = {
   description: "Investment product information, guides, and resources.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    { heading: "Downloads", documents: [{ name: "Investment Product Guide (PDF)", type: "pdf" }, { name: "Fund Performance Summary (XLS)", type: "xls" }] },
   ],
 }
 
@@ -54,7 +52,6 @@ export const productivityTrainings: PageContent = {
   description: "Training sessions and materials to boost agent productivity.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    { heading: "Downloads", documents: [{ name: "Training Schedule (PDF)", type: "pdf" }, { name: "Productivity Toolkit (PDF)", type: "pdf" }] },
   ],
 }
 
@@ -63,7 +60,6 @@ export const allAboutDigital: PageContent = {
   description: "Digital tools and platforms: PRUOne, PRISM, and more.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    { heading: "Downloads", documents: [{ name: "PRUOne User Guide (PDF)", type: "pdf" }, { name: "PRISM Access Guide (PDF)", type: "pdf" }] },
   ],
 }
 
@@ -82,7 +78,6 @@ export const underwriting: PageContent = {
   description: "Underwriting guidelines, rules, and reference materials.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    { heading: "Downloads", documents: [{ name: "Underwriting Guidelines 2026 (PDF)", type: "pdf" }, { name: "Underwriting Quick Reference (PDF)", type: "pdf" }] },
   ],
 }
 
@@ -91,7 +86,6 @@ export const agencyHandbook: PageContent = {
   description: "Complete agency reference handbook for all TOLIA agents.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    { heading: "Downloads", documents: [{ name: "Agency Handbook (PDF)", type: "pdf" }] },
   ],
 }
 
@@ -100,6 +94,5 @@ export const mdrtMaterials: PageContent = {
   description: "MDRT qualification resources, guides, and reference materials.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    { heading: "Downloads", documents: [{ name: "MDRT Qualification Guide (PDF)", type: "pdf" }, { name: "MDRT Application Form (PDF)", type: "pdf" }] },
   ],
 }

@@ -17,15 +17,19 @@ export const homeContent = {
           description: "Resources and tools for our agents",
         },
         {
+          label: "Rewards & Incentives",
+          href: "/rewards-and-incentives",
+          description: "Incentive programs and performance trackers",
+        },
+        {
           label: "From BM's Desk",
           href: "/from-bms-desk",
           description: "Updates and announcements from the BM",
         },
-
         {
-          label: "LEAP",
-          href: "/leap",
-          description: "Leadership development program",
+          label: "Schedules",
+          href: "/schedules",
+          description: "Client forum and PRU calendar",
         },
         {
           label: "Assemblies",
@@ -38,14 +42,9 @@ export const homeContent = {
           description: "Events, greetings, and community",
         },
         {
-          label: "Rewards & Incentives",
-          href: "/rewards-and-incentives",
-          description: "Incentive programs and performance trackers",
-        },
-        {
-          label: "Schedules",
-          href: "/schedules",
-          description: "Client forum and PRU calendar",
+          label: "LEAP",
+          href: "/leap",
+          description: "Leadership development program",
         },
         {
           label: "For UMs Only",

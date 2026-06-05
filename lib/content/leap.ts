@@ -6,6 +6,6 @@ export const leapContent: PageContent = {
   description: "Leadership development program for aspiring TOLIA leaders.",
   sections: [
     { heading: "Program Overview", body: STANDARD_BODY },
-    { heading: "Downloads", documents: [{ name: "LEAP Program Brochure (PDF)", type: "pdf" }, { name: "Application Form (PDF)", type: "pdf" }] },
+
   ],
 }

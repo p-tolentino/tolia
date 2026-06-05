@@ -20,7 +20,6 @@ export const achieversClub: PageContent = {
   description: "Track your Achievers Club qualifications and progress.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    { heading: "Downloads", documents: [{ name: "Achievers Club Guidelines (PDF)", type: "pdf" }, { name: "Qualification Tracker (XLS)", type: "xls" }] },
   ],
 }
 
@@ -29,6 +28,5 @@ export const protectionDrive: PageContent = {
   description: "Protection drive performance and progress tracker.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    { heading: "Downloads", documents: [{ name: "Protection Drive Tracker (XLS)", type: "xls" }, { name: "Campaign Guidelines (PDF)", type: "pdf" }] },
   ],
 }

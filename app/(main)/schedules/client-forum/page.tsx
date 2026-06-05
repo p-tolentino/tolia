@@ -17,7 +17,7 @@ export default function ClientForumPage() {
         breadcrumbs={getBreadcrumbs("/schedules/client-forum")}
       />
       <div className="mt-8">
-        <ContentSection sections={clientForumContent.sections} />
+        <ContentSection sections={clientForumContent.sections} routePath="/schedules/client-forum" />
       </div>
     </SectionWrapper>
   )

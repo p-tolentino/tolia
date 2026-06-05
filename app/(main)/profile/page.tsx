@@ -1,5 +1,7 @@
+import { Suspense } from "react"
 import type { Metadata } from "next"
 import { redirect } from "next/navigation"
+import { ProfileSkeleton } from "@/components/shared/skeletons"
 import { getAgentProfile } from "@/app/actions/agents"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -28,7 +30,7 @@ function formatDate(dateStr: string | null) {
   })
 }
 
-export default async function ProfilePage() {
+async function ProfileContent() {
   const agent = await getAgentProfile()
 
   if (!agent) redirect("/login")
@@ -137,11 +139,19 @@ export default async function ProfilePage() {
               </div>
             </div>
             <p className="text-xs text-muted-foreground">
-              Member since {formatDate(agent.created_at)}
+              TOLIA Web Suite Member since {formatDate(agent.created_at)}
             </p>
           </div>
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+export default function ProfilePage() {
+  return (
+    <Suspense fallback={<ProfileSkeleton />}>
+      <ProfileContent />
+    </Suspense>
   )
 }

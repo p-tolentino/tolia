@@ -17,7 +17,7 @@ export default function ReviewerPage() {
         breadcrumbs={getBreadcrumbs("/new-recruits/reviewer")}
       />
       <div className="mt-8">
-        <ContentSection sections={reviewer.sections} />
+        <ContentSection sections={reviewer.sections} routePath="/new-recruits/reviewer" />
       </div>
     </SectionWrapper>
   )

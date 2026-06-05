@@ -17,7 +17,7 @@ export default function AgencyHandbookPage() {
         breadcrumbs={getBreadcrumbs("/agent-support/agency-handbook")}
       />
       <div className="mt-8">
-        <ContentSection sections={agencyHandbook.sections} />
+        <ContentSection sections={agencyHandbook.sections} routePath="/agent-support/agency-handbook" />
       </div>
     </SectionWrapper>
   )

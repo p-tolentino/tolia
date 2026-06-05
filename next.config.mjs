@@ -2,7 +2,9 @@
 const nextConfig = {
   trailingSlash: true,
   experimental: {
-    viewTransition: true,
+    serverActions: {
+      bodySizeLimit: "25mb",
+    },
   },
 }
 

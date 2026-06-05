@@ -17,7 +17,7 @@ export default function GoldenListPage() {
         breadcrumbs={getBreadcrumbs("/new-recruits/golden-list")}
       />
       <div className="mt-8">
-        <ContentSection sections={goldenList.sections} />
+        <ContentSection sections={goldenList.sections} routePath="/new-recruits/golden-list" />
       </div>
     </SectionWrapper>
   )

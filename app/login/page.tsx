@@ -2,26 +2,44 @@
 
 import { Suspense, useState, useEffect, useRef } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Spinner } from "@/components/ui/spinner"
 import {
   signInWithGoogle,
   signInWithAgentCode,
   requestPasswordSetup,
 } from "@/app/actions/auth"
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
+import { loginSchema, firstTimeSchema, type LoginFormValues, type FirstTimeFormValues } from "@/lib/schemas/auth"
 
 function LoginForm() {
   const [showFirstTime, setShowFirstTime] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState<string | null>(null)
-
   const router = useRouter()
   const searchParams = useSearchParams()
   const toastShownRef = useRef(false)
+
+  const loginForm = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { agentCode: "", password: "" },
+  })
+
+  const firstTimeForm = useForm<FirstTimeFormValues>({
+    resolver: zodResolver(firstTimeSchema),
+    defaultValues: { agentCode: "" },
+  })
 
   const errorParam = searchParams.get("error")
   const errorMessage =
@@ -34,7 +52,6 @@ function LoginForm() {
       toast.error(errorMessage)
       toastShownRef.current = true
     }
-    // Reset the ref if the param changes to something else
     if (errorParam !== "no_agent_found") {
       toastShownRef.current = false
     }
@@ -50,16 +67,11 @@ function LoginForm() {
     return code
   }
 
-  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setError(null)
-    setSuccess(null)
-    const form = new FormData(event.currentTarget)
-    const result = await signInWithAgentCode(form)
+  async function onLogin(values: LoginFormValues) {
+    const result = await signInWithAgentCode(values.agentCode, values.password)
     if (result?.error) {
       const msg = loginErrorMessage(result.error)
-      setError(msg)
-      toast.error(msg)
+      loginForm.setError("root", { message: msg })
     }
     if (result?.success) {
       toast.success("Signed in successfully")
@@ -68,21 +80,20 @@ function LoginForm() {
     }
   }
 
-  async function handleFirstTime(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setError(null)
-    setSuccess(null)
-    const form = new FormData(event.currentTarget)
-    const result = await requestPasswordSetup(form)
+  async function onFirstTime(values: FirstTimeFormValues) {
+    const result = await requestPasswordSetup(values.agentCode)
     if (result?.error) {
-      setError(result.error)
+      firstTimeForm.setError("root", { message: result.error })
       toast.error(result.error)
     }
     if (result?.success) {
-      setSuccess(result.success)
+      firstTimeForm.setError("root", { message: "" })
       toast.success(result.success)
     }
   }
+
+  const loginPending = loginForm.formState.isSubmitting
+  const firstTimePending = firstTimeForm.formState.isSubmitting
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/30 px-4">
@@ -108,15 +119,15 @@ function LoginForm() {
             <Button
               variant="outline"
               className="w-full"
-              onClick={async () => {
-                setError(null)
-                const result = await signInWithGoogle(
-                  `${window.location.origin}/auth/callback`
-                )
-                if (result.url) window.location.href = result.url
+              disabled={loginPending}
+              onClick={() => {
+                signInWithGoogle(`${window.location.origin}/auth/callback`).then((result) => {
+                  if (result.url) window.location.href = result.url
+                })
               }}
             >
-              <svg className="mr-2 size-4" viewBox="0 0 24 24">
+              {loginPending && <Spinner className="mr-2 size-4" />}
+              {!loginPending && <svg className="mr-2 size-4" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
                   fill="#4285F4"
@@ -133,7 +144,7 @@ function LoginForm() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                   fill="#EA4335"
                 />
-              </svg>
+              </svg>}
               Sign in with Google
             </Button>
 
@@ -146,43 +157,75 @@ function LoginForm() {
           </>
         )}
 
-        <form
-          onSubmit={showFirstTime ? handleFirstTime : handleLogin}
-          className="space-y-4"
-        >
-          <div className="space-y-2">
-            <Label htmlFor="agent_code">Agent Code</Label>
-            <Input
-              id="agent_code"
-              name="agent_code"
-              type="text"
-              placeholder="e.g. 71234567"
-              required
-              autoCapitalize="none"
-              autoCorrect="off"
-            />
-          </div>
-
-          {!showFirstTime && (
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="Enter your password"
-                required
+        {showFirstTime ? (
+          <Form {...firstTimeForm}>
+            <form onSubmit={firstTimeForm.handleSubmit(onFirstTime)} className="space-y-4">
+              <FormField
+                control={firstTimeForm.control}
+                name="agentCode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Agent Code</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g. 71234567" autoCapitalize="none" autoCorrect="off" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-          )}
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
-          {success && <p className="text-sm text-emerald-600">{success}</p>}
+              {firstTimeForm.formState.errors.root?.message && (
+                <p className="text-sm text-destructive">{firstTimeForm.formState.errors.root.message}</p>
+              )}
 
-          <Button type="submit" className="w-full">
-            {showFirstTime ? "Send Setup Link" : "Sign in"}
-          </Button>
-        </form>
+              <Button type="submit" className="w-full" disabled={firstTimePending}>
+                {firstTimePending && <Spinner className="mr-2 size-4" />}
+                Send Setup Link
+              </Button>
+            </form>
+          </Form>
+        ) : (
+          <Form {...loginForm}>
+            <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
+              <FormField
+                control={loginForm.control}
+                name="agentCode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Agent Code</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g. 71234567" autoCapitalize="none" autoCorrect="off" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={loginForm.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="Enter your password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {loginForm.formState.errors.root?.message && (
+                <p className="text-sm text-destructive">{loginForm.formState.errors.root.message}</p>
+              )}
+
+              <Button type="submit" className="w-full" disabled={loginPending}>
+                {loginPending && <Spinner className="mr-2 size-4" />}
+                Sign in
+              </Button>
+            </form>
+          </Form>
+        )}
 
         <p className="text-center text-sm text-muted-foreground">
           {showFirstTime ? (
@@ -192,8 +235,8 @@ function LoginForm() {
                 type="button"
                 onClick={() => {
                   setShowFirstTime(false)
-                  setError(null)
-                  setSuccess(null)
+                  loginForm.setError("root", { message: "" })
+                  loginForm.reset()
                 }}
                 className="font-medium text-primary underline-offset-4 hover:underline"
               >
@@ -206,8 +249,8 @@ function LoginForm() {
                 type="button"
                 onClick={() => {
                   setShowFirstTime(true)
-                  setError(null)
-                  setSuccess(null)
+                  firstTimeForm.setError("root", { message: "" })
+                  firstTimeForm.reset()
                 }}
                 className="text-muted-foreground underline-offset-4"
               >

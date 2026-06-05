@@ -17,7 +17,7 @@ export default function MinutesOfTheMeetingPage() {
         breadcrumbs={getBreadcrumbs("/for-unit-managers-only/minutes-of-the-meeting")}
       />
       <div className="mt-8">
-        <ContentSection sections={minutesOfTheMeeting.sections} />
+        <ContentSection sections={minutesOfTheMeeting.sections} routePath="/for-unit-managers-only/minutes-of-the-meeting" />
       </div>
     </SectionWrapper>
   )

@@ -17,7 +17,7 @@ export default function ProductPrimersPage() {
         breadcrumbs={getBreadcrumbs("/agent-support/product-primers")}
       />
       <div className="mt-8">
-        <ContentSection sections={productPrimers.sections} />
+        <ContentSection sections={productPrimers.sections} routePath="/agent-support/product-primers" />
       </div>
     </SectionWrapper>
   )

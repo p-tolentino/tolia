@@ -17,7 +17,7 @@ export default function AllAboutDigitalPage() {
         breadcrumbs={getBreadcrumbs("/agent-support/all-about-digital")}
       />
       <div className="mt-8">
-        <ContentSection sections={allAboutDigital.sections} />
+        <ContentSection sections={allAboutDigital.sections} routePath="/agent-support/all-about-digital" />
       </div>
     </SectionWrapper>
   )

@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { formatTimeForCell } from "@/lib/calendar-utils"
+import { getTypeConfig } from "@/lib/calendar-colors"
 import {
   Popover,
   PopoverContent,
@@ -31,14 +32,11 @@ export function CalendarDay({
   const extraCount = allEvents.length - maxVisible
 
   const eventStyles: Record<string, string> = {
-    training:
-      "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
-    meeting:
-      "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300",
-    deadline: "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300",
-    social:
-      "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300",
-    exam: "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300",
+    training: getTypeConfig("training").pill,
+    meeting: getTypeConfig("meeting").pill,
+    deadline: getTypeConfig("deadline").pill,
+    social: getTypeConfig("social").pill,
+    exam: getTypeConfig("exam").pill,
   }
 
   function handleEventClick(e: React.MouseEvent, ev: CalendarEvent) {
@@ -73,12 +71,15 @@ export function CalendarDay({
             )}
             title={`${ev.title}${ev.time ? ` — ${ev.time}` : ""}`}
           >
-            {(ev.time || ev.startTime) && (
+            {ev.allDay ? (
+              <span className="mr-1 text-[10px] uppercase text-muted-foreground">All Day</span>
+            ) : (ev.time || ev.startTime) && (
               <span className="mr-1 font-semibold">
                 {formatTimeForCell(ev.time ?? ev.startTime)}
               </span>
             )}
             {ev.title}
+            {ev.location && <span className="ml-1 text-muted-foreground"> · {ev.location}</span>}
           </button>
         ))}
         {extraCount > 0 && (
@@ -118,16 +119,16 @@ export function CalendarDay({
                     <span
                       className={cn(
                         "size-2 shrink-0 rounded-full",
-                        ev.eventType === "training" && "bg-blue-500",
-                        ev.eventType === "meeting" && "bg-green-500",
-                        ev.eventType === "deadline" && "bg-red-500",
-                        ev.eventType === "social" && "bg-purple-500",
-                        ev.eventType === "exam" && "bg-amber-500"
+                        getTypeConfig(ev.eventType).dot
                       )}
                     />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{ev.title}</p>
-                      {(ev.time || ev.startTime) && (
+                      {ev.allDay ? (
+                        <p className="truncate text-xs text-muted-foreground">
+                          All Day{ev.location ? ` · ${ev.location}` : ""}
+                        </p>
+                      ) : (ev.time || ev.startTime) && (
                         <p className="truncate text-xs text-muted-foreground">
                           {formatTimeForCell(ev.time ?? ev.startTime)}
                         </p>

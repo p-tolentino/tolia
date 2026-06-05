@@ -17,7 +17,7 @@ export default function PromotionParametersPage() {
         breadcrumbs={getBreadcrumbs("/for-unit-managers-only/promotion-parameters")}
       />
       <div className="mt-8">
-        <ContentSection sections={promotionParameters.sections} />
+        <ContentSection sections={promotionParameters.sections} routePath="/for-unit-managers-only/promotion-parameters" />
       </div>
     </SectionWrapper>
   )

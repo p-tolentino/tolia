@@ -17,11 +17,13 @@ export async function signInWithGoogle(redirectTo?: string) {
   return { url: data.url }
 }
 
-export async function signInWithAgentCode(formData: FormData) {
-  const agentCode = (formData.get("agent_code") as string)?.toUpperCase()
-  const password = formData.get("password") as string
+export async function signInWithAgentCode(
+  agentCode: string,
+  password: string,
+) {
+  const normalizedCode = agentCode.toUpperCase()
 
-  if (!agentCode || !password) {
+  if (!normalizedCode || !password) {
     return { error: "Please fill in all fields." }
   }
 
@@ -31,7 +33,7 @@ export async function signInWithAgentCode(formData: FormData) {
   const { data: agent, error: lookupError } = await admin
     .from("agents")
     .select("email")
-    .eq("agent_code", agentCode)
+    .eq("agent_code", normalizedCode)
     .single()
 
   if (lookupError || !agent) {
@@ -104,12 +106,6 @@ export async function signOut() {
   return { success: true }
 }
 
-export async function getCurrentUser() {
-  const supabase = await createServerClient()
-  const { data } = await supabase.auth.getUser()
-  return data.user
-}
-
 export async function getCurrentAgent() {
   const supabase = await createServerClient()
   const {
@@ -133,10 +129,10 @@ export async function updateUserPassword(password: string) {
   return { success: true }
 }
 
-export async function requestPasswordSetup(formData: FormData) {
-  const agentCode = (formData.get("agent_code") as string)?.toUpperCase()
+export async function requestPasswordSetup(agentCode: string) {
+  const normalizedCode = agentCode.toUpperCase()
 
-  if (!agentCode) {
+  if (!normalizedCode) {
     return { error: "Please enter your agent code." }
   }
 
@@ -146,7 +142,7 @@ export async function requestPasswordSetup(formData: FormData) {
   const { data: agent, error: lookupError } = await admin
     .from("agents")
     .select("email, first_name, agent_code")
-    .eq("agent_code", agentCode)
+    .eq("agent_code", normalizedCode)
     .single()
 
   if (lookupError || !agent) {

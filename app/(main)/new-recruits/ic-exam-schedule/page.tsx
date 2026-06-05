@@ -17,7 +17,7 @@ export default function IcExamSchedulePage() {
         breadcrumbs={getBreadcrumbs("/new-recruits/ic-exam-schedule")}
       />
       <div className="mt-8">
-        <ContentSection sections={icExamSchedule.sections} />
+        <ContentSection sections={icExamSchedule.sections} routePath="/new-recruits/ic-exam-schedule" />
       </div>
     </SectionWrapper>
   )

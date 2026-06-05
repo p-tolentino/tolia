@@ -17,7 +17,7 @@ export default function UnderwritingPage() {
         breadcrumbs={getBreadcrumbs("/agent-support/underwriting")}
       />
       <div className="mt-8">
-        <ContentSection sections={underwriting.sections} />
+        <ContentSection sections={underwriting.sections} routePath="/agent-support/underwriting" />
       </div>
     </SectionWrapper>
   )

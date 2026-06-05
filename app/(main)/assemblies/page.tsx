@@ -17,7 +17,7 @@ export default function AssembliesPage() {
         breadcrumbs={getBreadcrumbs("/assemblies")}
       />
       <div className="mt-8">
-        <ContentSection sections={assembliesContent.sections} />
+        <ContentSection sections={assembliesContent.sections} routePath="/assemblies" />
       </div>
     </SectionWrapper>
   )

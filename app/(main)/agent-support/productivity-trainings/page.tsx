@@ -17,7 +17,7 @@ export default function ProductivityTrainingsPage() {
         breadcrumbs={getBreadcrumbs("/agent-support/productivity-trainings")}
       />
       <div className="mt-8">
-        <ContentSection sections={productivityTrainings.sections} />
+        <ContentSection sections={productivityTrainings.sections} routePath="/agent-support/productivity-trainings" />
       </div>
     </SectionWrapper>
   )

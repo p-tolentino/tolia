@@ -17,7 +17,7 @@ export default function RookieHighFlyersClubPage() {
         breadcrumbs={getBreadcrumbs("/new-recruits/rookie-high-flyers-club")}
       />
       <div className="mt-8">
-        <ContentSection sections={rookieHighFlyersClub.sections} />
+        <ContentSection sections={rookieHighFlyersClub.sections} routePath="/new-recruits/rookie-high-flyers-club" />
       </div>
     </SectionWrapper>
   )

@@ -17,7 +17,7 @@ export default function TappMaterialsPage() {
         breadcrumbs={getBreadcrumbs("/for-unit-managers-only/tapp-materials")}
       />
       <div className="mt-8">
-        <ContentSection sections={tappMaterials.sections} />
+        <ContentSection sections={tappMaterials.sections} routePath="/for-unit-managers-only/tapp-materials" />
       </div>
     </SectionWrapper>
   )

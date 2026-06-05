@@ -17,7 +17,7 @@ export default function RopIltPage() {
         breadcrumbs={getBreadcrumbs("/new-recruits/rop-ilt")}
       />
       <div className="mt-8">
-        <ContentSection sections={ropIlt.sections} />
+        <ContentSection sections={ropIlt.sections} routePath="/new-recruits/rop-ilt" />
       </div>
     </SectionWrapper>
   )

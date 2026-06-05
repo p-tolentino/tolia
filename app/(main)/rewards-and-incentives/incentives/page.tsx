@@ -17,7 +17,7 @@ export default function IncentivesPage() {
         breadcrumbs={getBreadcrumbs("/rewards-and-incentives/incentives")}
       />
       <div className="mt-8">
-        <ContentSection sections={incentivesContent.sections} />
+        <ContentSection sections={incentivesContent.sections} routePath="/rewards-and-incentives/incentives" />
       </div>
     </SectionWrapper>
   )

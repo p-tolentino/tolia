@@ -17,7 +17,7 @@ export default function AchieversClubPage() {
         breadcrumbs={getBreadcrumbs("/rewards-and-incentives/trackers/achievers-club")}
       />
       <div className="mt-8">
-        <ContentSection sections={achieversClub.sections} />
+        <ContentSection sections={achieversClub.sections} routePath="/rewards-and-incentives/trackers/achievers-club" />
       </div>
     </SectionWrapper>
   )

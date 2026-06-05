@@ -129,13 +129,6 @@ export const bybSchedule: PageContent = {
   description: "Build Your Business session schedules and registration.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Schedule",
-      documents: [
-        { name: "BYB Schedule 2026 (PDF)", type: "pdf" },
-        { name: "BYB Registration Form (PDF)", type: "pdf" },
-      ],
-    },
   ],
 }
 
@@ -144,13 +137,6 @@ export const icExamSchedule: PageContent = {
   description: "Licensing examination schedules and registration.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [
-        { name: "IC Exam Schedule 2026 (PDF)", type: "pdf" },
-        { name: "Exam Registration Form (PDF)", type: "pdf" },
-      ],
-    },
   ],
 }
 
@@ -159,14 +145,6 @@ export const reviewer: PageContent = {
   description: "Exam reviewers and study materials for the licensing exam.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [
-        { name: "Exam Reviewer (PDF)", type: "pdf" },
-        { name: "Practice Test (PDF)", type: "pdf" },
-        { name: "Study Guide (PDF)", type: "pdf" },
-      ],
-    },
   ],
 }
 
@@ -175,13 +153,6 @@ export const ropIlt: PageContent = {
   description: "Instructor-Led Training sessions for new recruits.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [
-        { name: "Training Schedule (PDF)", type: "pdf" },
-        { name: "ILT Materials (PDF)", type: "pdf" },
-      ],
-    },
   ],
 }
 
@@ -190,13 +161,6 @@ export const rookieHighFlyersClub: PageContent = {
   description: "Recognition program for top-performing rookie agents.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [
-        { name: "Program Guidelines (PDF)", type: "pdf" },
-        { name: "Qualification Criteria (PDF)", type: "pdf" },
-      ],
-    },
   ],
 }
 
@@ -205,10 +169,6 @@ export const goldenList: PageContent = {
   description: "List of qualified and approved recruits.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [{ name: "Golden List Guidelines (PDF)", type: "pdf" }],
-    },
   ],
 }
 
@@ -217,13 +177,6 @@ export const onboarding: PageContent = {
   description: "Step-by-step onboarding process for new TOLIA agents.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [
-        { name: "Onboarding Checklist (PDF)", type: "pdf" },
-        { name: "New Agent Handbook (PDF)", type: "pdf" },
-      ],
-    },
   ],
 }
 
@@ -232,13 +185,6 @@ export const prospectList: PageContent = {
   description: "Tools and templates for managing your prospect leads.",
   sections: [
     { heading: "Overview", body: STANDARD_BODY },
-    {
-      heading: "Downloads",
-      documents: [
-        { name: "Prospect List Template (XLS)", type: "xls" },
-        { name: "Prospect Tracking Guide (PDF)", type: "pdf" },
-      ],
-    },
   ],
 }
 

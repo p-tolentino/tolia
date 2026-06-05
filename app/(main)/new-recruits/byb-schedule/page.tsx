@@ -17,7 +17,7 @@ export default function BybSchedulePage() {
         breadcrumbs={getBreadcrumbs("/new-recruits/byb-schedule")}
       />
       <div className="mt-8">
-        <ContentSection sections={bybSchedule.sections} />
+        <ContentSection sections={bybSchedule.sections} routePath="/new-recruits/byb-schedule" />
       </div>
     </SectionWrapper>
   )

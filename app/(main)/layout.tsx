@@ -1,6 +1,7 @@
-import { ViewTransition } from "react"
+import { Suspense } from "react"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
+import { ContentSkeleton } from "@/components/shared/skeletons"
 
 export default function MainLayout({
   children,
@@ -11,9 +12,7 @@ export default function MainLayout({
     <>
       <Header />
       <main id="main-content" className="pt-16">
-        <ViewTransition enter="auto" default="none">
-          {children}
-        </ViewTransition>
+        <Suspense fallback={<ContentSkeleton />}>{children}</Suspense>
       </main>
       <Footer />
     </>

@@ -20,6 +20,6 @@ export const announcements: PageContent = {
   description: "Latest announcements and updates from the Branch Manager.",
   sections: [
     { heading: "Latest Updates", body: STANDARD_BODY },
-    { heading: "Downloads", documents: [{ name: "BM Message - Latest (PDF)", type: "pdf" }] },
+
   ],
 }

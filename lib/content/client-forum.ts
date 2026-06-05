@@ -6,6 +6,6 @@ export const clientForumContent: PageContent = {
   description: "A space for client discussions, feedback, and engagement.",
   sections: [
     { heading: "Forum", body: STANDARD_BODY },
-    { heading: "Guidelines", documents: [{ name: "Forum Guidelines (PDF)", type: "pdf" }] },
+    { heading: "Guidelines", body: "Community guidelines for client forum participation." },
   ],
 }
