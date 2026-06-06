@@ -1,12 +1,12 @@
 import { z } from "zod"
 
 export const loginSchema = z.object({
-  agentCode: z.string().min(1, "Agent code is required").transform((v) => v.toUpperCase()),
+  agentCode: z.string().min(1, "Agent code is required"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 })
 
 export const firstTimeSchema = z.object({
-  agentCode: z.string().min(1, "Agent code is required").transform((v) => v.toUpperCase()),
+  agentCode: z.string().min(1, "Agent code is required"),
 })
 
 export const passwordSchema = z

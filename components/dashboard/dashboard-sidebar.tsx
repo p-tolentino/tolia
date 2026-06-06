@@ -137,7 +137,7 @@ export function DashboardSidebar({
                 value={section.path}
                 className="border-none"
               >
-                <AccordionTrigger className="gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-sidebar-accent/50 hover:no-underline [&[data-state=open]]:bg-sidebar-accent/50">
+                <AccordionTrigger className="gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-sidebar-accent/50 hover:no-underline data-[state=open]:bg-sidebar-accent/50">
                   <div className="flex items-center gap-2">
                     <span className="shrink-0 text-sidebar-foreground/50">
                       {routeIcons[section.path.split("/").pop() ?? ""] ?? (
