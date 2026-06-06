@@ -9,7 +9,12 @@ import { AnnouncementsSection } from "./announcements-section"
 import { FilesSection } from "./files-section"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { PanelLeft, FileText } from "lucide-react"
 
@@ -91,7 +96,7 @@ export function DashboardShell() {
               }}
             >
               <CardHeader className="border-b bg-card">
-                <TabsList className="overflow-hidden bg-muted/50">
+                <TabsList className="bg-muted/50">
                   {tabs.map((tab) => (
                     <TabsTrigger
                       key={tab.value}

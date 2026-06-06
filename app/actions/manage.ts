@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { requireManageRole } from "@/lib/auth/require-role"
 import { revalidatePath } from "next/cache"
+import { createAdminClient } from "@/lib/supabase/admin"
 
 // ── Route Tree ──
 
@@ -14,14 +15,34 @@ export interface RouteNode {
 
 export async function getRouteTree(): Promise<RouteNode[]> {
   const routes: Record<string, RouteNode> = {
-    "agent-support": { label: "Agent Support", path: "/agent-support", children: [] },
+    "agent-support": {
+      label: "Agent Support",
+      path: "/agent-support",
+      children: [],
+    },
     assemblies: { label: "Assemblies", path: "/assemblies", children: [] },
     leap: { label: "LEAP", path: "/leap", children: [] },
-    "from-bms-desk": { label: "From BM's Desk", path: "/from-bms-desk", children: [] },
-    "new-recruits": { label: "New Recruits", path: "/new-recruits", children: [] },
-    "for-unit-managers-only": { label: "For Unit Managers Only", path: "/for-unit-managers-only", children: [] },
+    "from-bms-desk": {
+      label: "From BM's Desk",
+      path: "/from-bms-desk",
+      children: [],
+    },
+    "new-recruits": {
+      label: "New Recruits",
+      path: "/new-recruits",
+      children: [],
+    },
+    "for-unit-managers-only": {
+      label: "For Unit Managers Only",
+      path: "/for-unit-managers-only",
+      children: [],
+    },
     schedules: { label: "Schedules", path: "/schedules", children: [] },
-    "rewards-and-incentives": { label: "Rewards & Incentives", path: "/rewards-and-incentives", children: [] },
+    "rewards-and-incentives": {
+      label: "Rewards & Incentives",
+      path: "/rewards-and-incentives",
+      children: [],
+    },
     socials: { label: "Socials", path: "/socials", children: [] },
   }
 
@@ -31,10 +52,16 @@ export async function getRouteTree(): Promise<RouteNode[]> {
       { label: "All About Digital", parent: "agent-support/all-about-digital" },
       { label: "Forms", parent: "agent-support/forms" },
       { label: "Investment", parent: "agent-support/investment" },
-      { label: "Marketing Campaign", parent: "agent-support/marketing-campaign" },
+      {
+        label: "Marketing Campaign",
+        parent: "agent-support/marketing-campaign",
+      },
       { label: "MDRT Materials", parent: "agent-support/mdrt-materials" },
       { label: "Product Primers", parent: "agent-support/product-primers" },
-      { label: "Productivity Trainings", parent: "agent-support/productivity-trainings" },
+      {
+        label: "Productivity Trainings",
+        parent: "agent-support/productivity-trainings",
+      },
       { label: "Underwriting", parent: "agent-support/underwriting" },
     ],
     "from-bms-desk": [
@@ -47,22 +74,58 @@ export async function getRouteTree(): Promise<RouteNode[]> {
       { label: "IC Exam Schedule", parent: "new-recruits/ic-exam-schedule" },
       { label: "Onboarding", parent: "new-recruits/onboarding" },
       { label: "Prospect List", parent: "new-recruits/prospect-list" },
-      { label: "Recruitment Flowchart", parent: "new-recruits/recruitment-flowchart" },
+      {
+        label: "Recruitment Flowchart",
+        parent: "new-recruits/recruitment-flowchart",
+      },
       { label: "Reviewer", parent: "new-recruits/reviewer" },
-      { label: "Rookie High Flyers Club", parent: "new-recruits/rookie-high-flyers-club" },
+      {
+        label: "Rookie High Flyers Club",
+        parent: "new-recruits/rookie-high-flyers-club",
+      },
       { label: "ROP / ILT", parent: "new-recruits/rop-ilt" },
-      { label: "Your First 90 Days", parent: "new-recruits/your-first-90-days" },
+      {
+        label: "Your First 90 Days",
+        parent: "new-recruits/your-first-90-days",
+      },
     ],
     "for-unit-managers-only": [
-      { label: "Agents Directory", parent: "for-unit-managers-only/agents-directory" },
-      { label: "MDRT Center of Field Leadership", parent: "for-unit-managers-only/mdrt-center-of-field-leadership" },
-      { label: "Minutes of the Meeting", parent: "for-unit-managers-only/minutes-of-the-meeting" },
-      { label: "Onboarding Materials", parent: "for-unit-managers-only/onboarding-materials" },
-      { label: "One on One Engagement", parent: "for-unit-managers-only/one-on-one-engagement" },
-      { label: "Promotion Parameters", parent: "for-unit-managers-only/promotion-parameters" },
-      { label: "TAPP Materials", parent: "for-unit-managers-only/tapp-materials" },
-      { label: "UM Welcome Kit", parent: "for-unit-managers-only/um-welcome-kit" },
-      { label: "Unit Business Plan", parent: "for-unit-managers-only/unit-business-plan" },
+      {
+        label: "Agents Directory",
+        parent: "for-unit-managers-only/agents-directory",
+      },
+      {
+        label: "MDRT Center of Field Leadership",
+        parent: "for-unit-managers-only/mdrt-center-of-field-leadership",
+      },
+      {
+        label: "Minutes of the Meeting",
+        parent: "for-unit-managers-only/minutes-of-the-meeting",
+      },
+      {
+        label: "Onboarding Materials",
+        parent: "for-unit-managers-only/onboarding-materials",
+      },
+      {
+        label: "One on One Engagement",
+        parent: "for-unit-managers-only/one-on-one-engagement",
+      },
+      {
+        label: "Promotion Parameters",
+        parent: "for-unit-managers-only/promotion-parameters",
+      },
+      {
+        label: "TAPP Materials",
+        parent: "for-unit-managers-only/tapp-materials",
+      },
+      {
+        label: "UM Welcome Kit",
+        parent: "for-unit-managers-only/um-welcome-kit",
+      },
+      {
+        label: "Unit Business Plan",
+        parent: "for-unit-managers-only/unit-business-plan",
+      },
     ],
     schedules: [
       { label: "Client Forum", parent: "schedules/client-forum" },
@@ -104,12 +167,16 @@ export interface Announcement {
   updated_at: string
 }
 
-export async function getAnnouncements(): Promise<{ data: Announcement[] | null; error: string | null }> {
+export async function getAnnouncements(): Promise<{
+  data: Announcement[] | null
+  error: string | null
+}> {
   try {
     const supabase = await createClient()
     const { data, error } = await supabase
       .from("announcements")
       .select("*")
+      .eq("is_published", true)
       .order("created_at", { ascending: false })
 
     if (error) return { data: null, error: error.message }
@@ -122,7 +189,7 @@ export async function getAnnouncements(): Promise<{ data: Announcement[] | null;
 export async function createAnnouncement(
   title: string,
   content: string,
-  isPublished?: boolean,
+  isPublished?: boolean
 ): Promise<{ data: Announcement | null; error: string | null }> {
   try {
     const auth = await requireManageRole()
@@ -131,7 +198,12 @@ export async function createAnnouncement(
 
     const { data, error } = await supabase
       .from("announcements")
-      .insert({ title, content, author_id: auth.userId, is_published: isPublished ?? false })
+      .insert({
+        title,
+        content,
+        author_id: auth.userId,
+        is_published: isPublished ?? false,
+      })
       .select()
       .single()
 
@@ -145,7 +217,7 @@ export async function createAnnouncement(
 
 export async function updateAnnouncement(
   id: string,
-  updates: { title?: string; content?: string; is_published?: boolean },
+  updates: { title?: string; content?: string; is_published?: boolean }
 ): Promise<{ data: Announcement | null; error: string | null }> {
   try {
     const auth = await requireManageRole()
@@ -167,7 +239,7 @@ export async function updateAnnouncement(
 }
 
 export async function deleteAnnouncement(
-  id: string,
+  id: string
 ): Promise<{ success: boolean; error: string | null }> {
   try {
     const auth = await requireManageRole()
@@ -197,7 +269,7 @@ export interface RouteDocument {
 }
 
 export async function getRouteDocuments(
-  routePath: string,
+  routePath: string
 ): Promise<{ data: RouteDocument[] | null; error: string | null }> {
   try {
     const supabase = await createClient()
@@ -216,7 +288,7 @@ export async function getRouteDocuments(
 
 export async function createRouteDocument(
   routePath: string,
-  label: string,
+  label: string
 ): Promise<{ data: RouteDocument | null; error: string | null }> {
   try {
     const auth = await requireManageRole()
@@ -239,7 +311,7 @@ export async function createRouteDocument(
 
 export async function uploadRouteDocument(
   documentId: string,
-  formData: FormData,
+  formData: FormData
 ): Promise<{ data: RouteDocument | null; error: string | null }> {
   try {
     const auth = await requireManageRole()
@@ -296,10 +368,11 @@ export async function getAgentStats(): Promise<{
   error: string | null
 }> {
   try {
-    const supabase = await createClient()
+    const supabase = await createAdminClient()
     const { count: total, error: totalErr } = await supabase
       .from("agents")
       .select("*", { count: "exact", head: true })
+
     if (totalErr) return { data: null, error: totalErr.message }
 
     const { count: active, error: activeErr } = await supabase
@@ -315,7 +388,7 @@ export async function getAgentStats(): Promise<{
 }
 
 export async function deleteRouteDocument(
-  id: string,
+  id: string
 ): Promise<{ success: boolean; error: string | null }> {
   try {
     const auth = await requireManageRole()
@@ -332,7 +405,10 @@ export async function deleteRouteDocument(
       await supabase.storage.from("tolia-files").remove([doc.storage_path])
     }
 
-    const { error } = await supabase.from("route_documents").delete().eq("id", id)
+    const { error } = await supabase
+      .from("route_documents")
+      .delete()
+      .eq("id", id)
     if (error) return { success: false, error: error.message }
     revalidatePath("/")
     return { success: true, error: null }

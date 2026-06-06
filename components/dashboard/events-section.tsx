@@ -183,7 +183,7 @@ export function EventsSection() {
       </div>
 
       <Tabs value={filter} onValueChange={(v) => setFilter(v as FilterTab)}>
-        <TabsList className="overflow-hidden">
+        <TabsList>
           <TabsTrigger value="all">All Events</TabsTrigger>
           <TabsTrigger value="upcoming">Upcoming Events</TabsTrigger>
           <TabsTrigger value="recurring">Recurring Events</TabsTrigger>

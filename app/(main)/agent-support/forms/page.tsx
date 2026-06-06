@@ -12,12 +12,15 @@ export const metadata: Metadata = {
 
 export default function FormsPage() {
   const tabs = forms.sections.map((s) => ({ label: s.heading, section: s }))
+
   return (
     <SectionWrapper>
-      <PageHeader title={forms.title} description={forms.description} 
+      <PageHeader
+        title={forms.title}
+        description={forms.description}
         breadcrumbs={getBreadcrumbs("/agent-support/forms")}
       />
-      <TabbedContent tabs={tabs} />
+      <TabbedContent tabs={tabs} routePath="/agent-support/forms" />
     </SectionWrapper>
   )
 }

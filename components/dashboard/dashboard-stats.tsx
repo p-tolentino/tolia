@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Calendar, Megaphone, Users } from "lucide-react"
+import { getCalendarEventsCount } from "@/app/actions/calendar"
+import { getAgentStats, getAnnouncements } from "@/app/actions/manage"
 
 interface Stat {
   title: string
@@ -18,12 +20,6 @@ export function DashboardStats() {
 
   useEffect(() => {
     async function load() {
-      const [{ getCalendarEventsCount }, { getAnnouncements, getAgentStats }] =
-        await Promise.all([
-          import("@/app/actions/calendar"),
-          import("@/app/actions/manage"),
-        ])
-
       const [eventsCount, announcementsRes, agentStats] = await Promise.all([
         getCalendarEventsCount(),
         getAnnouncements(),
