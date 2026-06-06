@@ -35,6 +35,8 @@ export async function getCalendarMonthEvents(
 export async function getCalendarEvents(options?: {
   limit?: number
   offset?: number
+  filter?: "all" | "upcoming" | "recurring"
+  direction?: "forward" | "backward"
 }): Promise<{
   data: CalendarEvent[] | null
   error: string | null
@@ -47,8 +49,25 @@ export async function getCalendarEvents(options?: {
       .from("calendar_events")
       .select("*, event_attachments(*)", { count: "exact" })
       .in("status", ["published", "rescheduled"])
-      .order("date", { ascending: true })
-      .order("start_time", { ascending: true })
+
+    const today = new Date().toISOString().split("T")[0]
+
+    if (options?.direction === "forward") {
+      query = query.gte("date", today).order("date", { ascending: true })
+    } else if (options?.direction === "backward") {
+      query = query.lt("date", today).order("date", { ascending: false })
+    } else {
+      query = query.order("date", { ascending: true })
+    }
+
+    if (options?.filter === "upcoming") {
+      query = query.gte("date", today)
+    }
+    if (options?.filter === "recurring") {
+      query = query.not("rrule", "is", null)
+    }
+
+    query = query.order("start_time", { ascending: true })
 
     if (options?.limit) query = query.limit(options.limit)
     if (options?.offset) query = query.range(options.offset, options.offset + (options.limit ?? 20) - 1)

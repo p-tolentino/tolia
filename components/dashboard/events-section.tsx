@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -35,6 +36,7 @@ import { getCalendarEvents, deleteCalendarEvent } from "@/app/actions/calendar"
 import { rruleToDisplayText } from "@/lib/calendar/recurrence"
 
 const PAGE_SIZE = 10
+type FilterTab = "all" | "upcoming" | "recurring"
 
 const eventTypeColors: Record<
   string,
@@ -83,45 +85,131 @@ function EventTypeBadge({ type }: { type: string }) {
   )
 }
 
-type FilterTab = "all" | "upcoming" | "recurring"
-
 export function EventsSection() {
   const [events, setEvents] = useState<CalendarEvent[]>([])
   const [loading, setLoading] = useState(true)
   const [loadingMore, setLoadingMore] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
+  const [filter, setFilter] = useState<FilterTab>("all")
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingEvent, setEditingEvent] = useState<CalendarEvent | null>(null)
   const [deletingEvent, setDeletingEvent] = useState<CalendarEvent | null>(null)
-  const [filter, setFilter] = useState<FilterTab>("all")
-  const offsetRef = useRef(0)
 
-  const load = useCallback(async (reset?: boolean) => {
-    const offset = reset ? 0 : offsetRef.current
-    const { data, error, total } = await getCalendarEvents({
-      limit: PAGE_SIZE,
-      offset,
-    })
-    if (error) {
-      toast.error(error)
+  // ── Single-phase pagination (upcoming, recurring) ──
+  const hasMoreRef = useRef<Record<"upcoming" | "recurring", boolean>>({
+    upcoming: true,
+    recurring: true,
+  })
+  const cacheRef = useRef<Record<"upcoming" | "recurring", CalendarEvent[]>>({
+    upcoming: [],
+    recurring: [],
+  })
+  const offsetsRef = useRef<Record<"upcoming" | "recurring", number>>({
+    upcoming: 0,
+    recurring: 0,
+  })
+
+  // ── Two-phase pagination (all) ──
+  const allForwardCache = useRef<CalendarEvent[]>([])
+  const allForwardLoaded = useRef(false)
+  const allBackwardCache = useRef<CalendarEvent[]>([])
+  const allBackwardOffset = useRef(0)
+  const allBackwardHasMore = useRef(true)
+
+  // ── Helpers ──
+
+  function clearAllCaches() {
+    allForwardLoaded.current = false
+    allForwardCache.current = []
+    allBackwardCache.current = []
+    allBackwardOffset.current = 0
+    allBackwardHasMore.current = true
+    cacheRef.current = { upcoming: [], recurring: [] }
+    offsetsRef.current = { upcoming: 0, recurring: 0 }
+    hasMoreRef.current = { upcoming: true, recurring: true }
+  }
+
+  // ── Single-phase load (upcoming, recurring) ──
+
+  const load = useCallback(
+    async (reset?: boolean) => {
+      if (filter === "all") return
+      const tab = filter as "upcoming" | "recurring"
+      const offset = reset ? 0 : offsetsRef.current[tab]
+      const { data, error, total } = await getCalendarEvents({
+        limit: PAGE_SIZE,
+        offset,
+        filter: tab === "upcoming" ? "upcoming" : "recurring",
+      })
+      if (error) {
+        toast.error(error)
+        return
+      }
+      const newEvents = reset
+        ? (data ?? [])
+        : [...cacheRef.current[tab], ...(data ?? [])]
+      cacheRef.current[tab] = newEvents
+      offsetsRef.current[tab] = offset + PAGE_SIZE
+      hasMoreRef.current[tab] = total
+        ? offset + PAGE_SIZE < total
+        : (data?.length ?? 0) === PAGE_SIZE
+      setEvents(newEvents)
+    },
+    [filter]
+  )
+
+  // ── Two-phase load (all) ──
+
+  const loadAll = useCallback(async () => {
+    if (allForwardLoaded.current) {
+      setEvents([...allForwardCache.current, ...allBackwardCache.current])
+      setLoading(false)
       return
     }
-    if (reset) {
-      setEvents(data ?? [])
-    } else {
-      setEvents((prev) => [...prev, ...(data ?? [])])
+    setLoading(true)
+    const [forwardRes, backwardRes] = await Promise.all([
+      getCalendarEvents({ direction: "forward" }),
+      getCalendarEvents({ direction: "backward", limit: PAGE_SIZE, offset: 0 }),
+    ])
+    if (forwardRes.error || backwardRes.error) {
+      toast.error(
+        forwardRes.error ?? backwardRes.error ?? "Failed to load events"
+      )
+      setLoading(false)
+      return
     }
-    offsetRef.current = offset + PAGE_SIZE
-    setHasMore(
-      total ? offsetRef.current < total : (data?.length ?? 0) === PAGE_SIZE
-    )
+    const forward = forwardRes.data ?? []
+    const backward = backwardRes.data ?? []
+    allForwardCache.current = forward
+    allForwardLoaded.current = true
+    allBackwardCache.current = backward
+    allBackwardOffset.current = PAGE_SIZE
+    allBackwardHasMore.current = backwardRes.total
+      ? PAGE_SIZE < backwardRes.total
+      : backward.length === PAGE_SIZE
+    setEvents([...forward, ...backward])
+    setLoading(false)
   }, [])
 
+  // ── Effects ──
+
   useEffect(() => {
-    offsetRef.current = 0
+    if (filter === "all") return
+    const tab = filter as "upcoming" | "recurring"
+    if (cacheRef.current[tab].length > 0) {
+      setEvents(cacheRef.current[tab])
+      setLoading(false)
+      return
+    }
     setLoading(true)
     load(true).finally(() => setLoading(false))
-  }, [load])
+  }, [filter, load])
+
+  useEffect(() => {
+    if (filter !== "all") return
+    loadAll()
+  }, [filter, loadAll])
+
+  // ── Mutations ──
 
   async function confirmDelete() {
     if (!deletingEvent) return
@@ -129,8 +217,13 @@ export function EventsSection() {
     if (error) toast.error(error)
     else {
       toast.success("Event deleted")
-      offsetRef.current = 0
-      load(true)
+      clearAllCaches()
+      setLoading(true)
+      if (filter === "all") {
+        loadAll()
+      } else {
+        load(true).finally(() => setLoading(false))
+      }
     }
     setDeletingEvent(null)
   }
@@ -146,23 +239,45 @@ export function EventsSection() {
   }
 
   function handleSaved() {
-    offsetRef.current = 0
-    load(true)
+    clearAllCaches()
+    setLoading(true)
+    if (filter === "all") {
+      loadAll()
+    } else {
+      load(true).finally(() => setLoading(false))
+    }
   }
 
   async function loadMore() {
+    if (filter === "all") {
+      if (!allBackwardHasMore.current) return
+      setLoadingMore(true)
+      const { data, error, total } = await getCalendarEvents({
+        direction: "backward",
+        limit: PAGE_SIZE,
+        offset: allBackwardOffset.current,
+      })
+      if (error) {
+        toast.error(error)
+        setLoadingMore(false)
+        return
+      }
+      const newBackward = [...allBackwardCache.current, ...(data ?? [])]
+      allBackwardCache.current = newBackward
+      allBackwardOffset.current += PAGE_SIZE
+      allBackwardHasMore.current = total
+        ? allBackwardOffset.current < total
+        : (data?.length ?? 0) === PAGE_SIZE
+      setEvents([...allForwardCache.current, ...newBackward])
+      setLoadingMore(false)
+      return
+    }
     setLoadingMore(true)
     await load()
     setLoadingMore(false)
   }
 
-  const today = format(new Date(), "yyyy-MM-dd")
-  const filtered =
-    filter === "upcoming"
-      ? events.filter((e) => e.date >= today)
-      : filter === "recurring"
-        ? events.filter((e) => e.rrule)
-        : events
+  // ── Render ──
 
   if (loading) {
     return (
@@ -190,7 +305,35 @@ export function EventsSection() {
         </TabsList>
       </Tabs>
 
-      {events.length === 0 ? (
+      {events.length === 0 && filter === "upcoming" ? (
+        <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-muted/20 px-6 py-12 text-center">
+          <div className="rounded-full bg-muted p-3">
+            <CalendarRange className="size-8 text-muted-foreground" />
+          </div>
+          <h3 className="mt-4 text-base font-semibold text-foreground">
+            No upcoming events
+          </h3>
+          <p className="mt-1 max-w-sm text-sm text-muted-foreground">
+            There are no events scheduled for today or later.
+          </p>
+          <Button className="mt-4" size="sm" onClick={handleAdd}>
+            <Plus className="mr-1 size-4" />
+            Add Event
+          </Button>
+        </div>
+      ) : events.length === 0 && filter === "recurring" ? (
+        <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-muted/20 px-6 py-12 text-center">
+          <div className="rounded-full bg-muted p-3">
+            <RotateCcw className="size-8 text-muted-foreground" />
+          </div>
+          <h3 className="mt-4 text-base font-semibold text-foreground">
+            No recurring events
+          </h3>
+          <p className="mt-1 max-w-sm text-sm text-muted-foreground">
+            Events with a recurrence pattern set will appear here.
+          </p>
+        </div>
+      ) : events.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-muted/20 px-6 py-12 text-center">
           <div className="rounded-full bg-muted p-3">
             <CalendarRange className="size-8 text-muted-foreground" />
@@ -207,124 +350,127 @@ export function EventsSection() {
             Add Event
           </Button>
         </div>
-      ) : filtered.length === 0 && filter === "recurring" ? (
-        <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-muted/20 px-6 py-12 text-center">
-          <div className="rounded-full bg-muted p-3">
-            <RotateCcw className="size-8 text-muted-foreground" />
-          </div>
-          <h3 className="mt-4 text-base font-semibold text-foreground">
-            No recurring events
-          </h3>
-          <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-            Events with a recurrence pattern set will appear here.
-          </p>
-        </div>
-      ) : filtered.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-muted/20 px-6 py-12 text-center">
-          <div className="rounded-full bg-muted p-3">
-            <CalendarRange className="size-8 text-muted-foreground" />
-          </div>
-          <h3 className="mt-4 text-base font-semibold text-foreground">
-            No matching events
-          </h3>
-          <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-            Try adjusting the filter to see more events.
-          </p>
-        </div>
       ) : (
         <ScrollArea className="h-125 pr-4">
           <InfiniteScroll
             onLoadMore={loadMore}
-            hasMore={hasMore}
+            hasMore={
+              filter === "all"
+                ? allBackwardHasMore.current
+                : hasMoreRef.current[filter as "upcoming" | "recurring"]
+            }
             loading={loadingMore}
           >
             <div className="space-y-3 p-0.5">
-              {filtered.map((event) => {
+              {events.map((event, index) => {
+                const forwardCount = allForwardCache.current.length
+                const showSeparator =
+                  filter === "all" &&
+                  index === forwardCount &&
+                  forwardCount > 0 &&
+                  allBackwardCache.current.length > 0
+
                 const eventDate = new Date(event.date)
                 return (
-                  <Card
-                    key={event.id}
-                    className="overflow-hidden border py-0 shadow-sm transition-all hover:shadow-md"
-                  >
-                    <div className="flex">
-                      <div className="flex w-20 shrink-0 flex-col items-center justify-center border-r bg-muted/30 py-3">
-                        <span className="text-xs font-bold text-muted-foreground uppercase">
-                          {format(eventDate, "MMM")}
-                        </span>
-                        <span className="text-2xl leading-none font-bold tracking-tight">
-                          {format(eventDate, "d")}
-                        </span>
-                        <span className="mt-0.5 text-[11px] text-muted-foreground">
-                          {format(eventDate, "EEE")}
-                        </span>
+                  <div key={event.id}>
+                    {showSeparator && (
+                      <div className="relative my-6">
+                        <div className="absolute inset-0 flex items-center">
+                          <Separator />
+                        </div>
+                        <div className="relative flex justify-center">
+                          <span className="bg-card px-3 text-xs text-muted-foreground">
+                            Past Events
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex flex-1 items-center justify-between p-4">
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <EventTypeBadge type={event.eventType} />
-                            <h4 className="text-sm font-medium">
-                              {event.title}
-                            </h4>
-                          </div>
-                          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                            <span className="flex min-w-28 shrink-0 items-center gap-1">
-                              {event.allDay ? (
-                                <>
-                                  <Clock className="size-3" />
-                                  All day
-                                </>
-                              ) : event.startTime ? (
-                                <>
-                                  <Clock className="size-3" />
-                                  {event.startTime}
-                                  {event.endTime ? ` - ${event.endTime}` : ""}
-                                </>
-                              ) : null}
-                            </span>
-                            {event.location && (
-                              <span className="flex max-w-48 items-center gap-1">
-                                <MapPin className="size-3 shrink-0" />
-                                {event.location}
-                              </span>
-                            )}
-                            {event.endDate && (
-                              <span
-                                className={`flex items-center gap-1 ${event.location && "ml-8"}`}
-                              >
-                                <CalendarRange className="size-3" />
-                                Until{" "}
-                                {format(new Date(event.endDate), "MMM d, yyyy")}
-                              </span>
-                            )}
-                          </div>
-                          {event.rrule && (
-                            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                              <RotateCcw className="size-3 shrink-0" />
-                              {rruleToDisplayText(event.rrule)}
+                    )}
+                    <Card className="overflow-hidden border py-0 shadow-sm transition-all hover:shadow-md">
+                      <div className="flex">
+                        <div className="flex w-20 shrink-0 flex-col items-center justify-center border-r bg-muted/30 py-3">
+                          <span className="text-xs font-bold text-muted-foreground uppercase">
+                            {format(eventDate, "MMM")}
+                          </span>
+                          <span className="text-2xl leading-none font-bold tracking-tight">
+                            {format(eventDate, "d")}
+                          </span>
+                          <span className="mt-0.5 text-[11px] text-muted-foreground">
+                            {format(eventDate, "EEE")}
+                          </span>
+                        </div>
+                        <div className="flex flex-1 items-center justify-between p-4">
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                              <EventTypeBadge type={event.eventType} />
+                              <h4 className="text-sm font-medium">
+                                {event.title}
+                              </h4>
                             </div>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="size-8 text-muted-foreground hover:text-foreground"
-                            onClick={() => handleEdit(event)}
-                          >
-                            <Pencil className="size-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="size-8 text-muted-foreground hover:text-destructive"
-                            onClick={() => setDeletingEvent(event)}
-                          >
-                            <Trash2 className="size-4" />
-                          </Button>
+                            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                              <span className="flex min-w-28 shrink-0 items-center gap-1">
+                                {event.allDay ? (
+                                  <>
+                                    <Clock className="size-3" />
+                                    All day
+                                  </>
+                                ) : event.startTime ? (
+                                  <>
+                                    <Clock className="size-3" />
+                                    {event.startTime}
+                                    {event.endTime
+                                      ? ` - ${event.endTime}`
+                                      : ""}
+                                  </>
+                                ) : null}
+                              </span>
+                              {event.location && (
+                                <span className="flex max-w-48 items-center gap-1">
+                                  <MapPin className="size-3 shrink-0" />
+                                  {event.location}
+                                </span>
+                              )}
+                              {event.endDate && (
+                                <span
+                                  className={`flex items-center gap-1 ${event.location && "ml-8"}`}
+                                >
+                                  <CalendarRange className="size-3" />
+                                  Until{" "}
+                                  {format(
+                                    new Date(event.endDate),
+                                    "MMM d, yyyy"
+                                  )}
+                                </span>
+                              )}
+                            </div>
+                            {event.rrule && (
+                              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                                <RotateCcw className="size-3 shrink-0" />
+                                {rruleToDisplayText(event.rrule)}
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="size-8 text-muted-foreground hover:text-foreground"
+                              onClick={() => handleEdit(event)}
+                            >
+                              <Pencil className="size-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="size-8 text-muted-foreground hover:text-destructive"
+                              onClick={() => setDeletingEvent(event)}
+                            >
+                              <Trash2 className="size-4" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Card>
+                    </Card>
+                  </div>
                 )
               })}
             </div>
